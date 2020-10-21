@@ -14,6 +14,7 @@ import {
 import {Horizon as _Horizon} from './horizon';
 import {Account} from './account';
 import {Storage, StorageType} from './storage';
+import {StellarSuiteError} from './error';
 
 interface Callback {
   (res: any): void
@@ -134,10 +135,7 @@ export namespace Transaction {
         return await _Horizon.connect().submitTransaction(transaction)
       }
     } catch (e) {
-        console.log(1)
-      if (!e.response)
-            throw new Error(JSON.stringify(e.response.data));
-      // if (e.response) {
+      if (!(e instanceof StellarSuiteError)) {
         switch (e.response.data.status) {
           case 504:
             console.count(`[504 Error] Retry. ${retryCount}`);
@@ -152,11 +150,8 @@ export namespace Transaction {
           default:
             throw new Error(JSON.stringify(e.response.data));
         }
-      // } else {
-        console.log(3)
-        // throw new Error(JSON.stringify(e));
-      // }
-            throw new Error(JSON.stringify(e));
+      }
+      throw e;
     }
   }
 }

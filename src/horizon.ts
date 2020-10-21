@@ -4,6 +4,7 @@ import {
 } from 'stellar-sdk';
 
 import {constants} from './constants';
+import {StellarSuiteError} from './error';
 
 export namespace Horizon {
   const env = process.env.NODE_ENV;
@@ -17,7 +18,9 @@ export namespace Horizon {
     } else if (env === constants.prd) {
       horizonObject = new Server(constants.horizon.mainnet);
     } else {
-      throw new Error(`No match enviroment: only ${constants.dev}, ${constants.prd}`);
+      throw new StellarSuiteError(
+        `No match enviroment: only ${constants.dev}, ${constants.prd}`
+      );
     }
     return horizonObject;
   }
@@ -28,7 +31,9 @@ export namespace Horizon {
     } else if (env === constants.prd) {
       return Networks.PUBLIC;
     } else {
-      throw new Error(`No match enviroment: only ${constants.dev}, ${constants.prd}`);
+      throw new StellarSuiteError(
+        `No match enviroment: only ${constants.dev}, ${constants.prd}`
+      );
     }
   }
 }

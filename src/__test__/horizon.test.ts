@@ -10,4 +10,12 @@ describe('Stellar.Horizon', () => {
     const res = Horizon.network();
     expect(res).toBeDefined();
   });
+
+  test('raise exception(error)', async () => {
+    process.env.NODE_ENV = 'nomatch';
+    console.log(process.env.NODE_ENV);
+    const res = Horizon.network();
+    console.log(process.env.NODE_ENV);
+    expect(res).toBeDefined();
+  });
 });
