@@ -211,18 +211,82 @@ const receiverSecret = 'SAMTOLCOEJYAD5JUKP2XUVMGJ3QZ77E26T64PMGXDXLAYX5AQN7CFGTR
 const tokenName = 'TESTTOKEN';
 
 (async() => {
-  try {
   const token = Token.create(tokenName, issuerPubkey);
   const res = await Token.trustline(receiverSecret, token);
-  console.log(res);
-  } catch (e) {
-    console.error(e);
-  }
 })();
 
 /*
 
 * response is `Horizon.SubmitTransactionResponse` object
+
 */
 ```
+
+### Payment
+
+* send 1 XLM to receiver address
+
+```js
+const {Payment} = require('stellar-suite');
+
+const senderSecret = 'SCP5L3JUL4YP62BCUAXY3YXOIRLP3VYRXETANE53QSHKB6D2AMTY52K2';
+const receiverPubkey = 'GBFXT3XP46G4PNMYM67IN5TC76ZVGBZVV2YTRP23D2IMBXAL2HAWGRO6';
+
+(async () => {
+  const amount = '1';
+  const res = await Payment.send(
+    receiverPubkey,
+    senderSecret,
+    amount,
+  )();
+  console.log(res);
+})();
+
+
+/*
+
+* response is `Horizon.SubmitTransactionResponse` object
+
+*/
+```
+
+* send 1 token(asset) to receiver address
+
+```js
+
+const {
+  Token,
+  Payment
+} = require('stellar-suite');
+
+const issuer = {
+  pubkey: 'GBKRTWUPAIABKFIK3FWZYOR2TXM5SHD4NUV225AAOFCV2HTWVEBUDUAC',
+  secret: 'SCP5L3JUL4YP62BCUAXY3YXOIRLP3VYRXETANE53QSHKB6D2AMTY52K2'
+};
+
+const receiver = {
+  pubkey: 'GA62CTAT6MCN5BPULVHCF5R44HO4V6M2JPXLGL55DRXNWS2TWVICOOC4',
+  secret: 'SCQSPQESX2TFHOWJV4AF4FBFZVOC4X5JFR6VOJZ2L4K6YSW3XRVLTUAU'
+};
+
+(async () => {
+  const token = Token.create('TEST', issuer.pubkey);
+  await Token.trustline(receiver.secret, token);
+  const amount = '1';
+  const res = await Payment.send(
+    receiver.pubkey,
+    issuer.secret,
+    amount,
+    token,
+  )();
+  console.log(res);
+})();
+
+/*
+
+* response is `Horizon.SubmitTransactionResponse` object
+
+*/
+```
+
 
