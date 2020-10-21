@@ -193,7 +193,7 @@ const tokenName = 'TESTTOKEN';
 })();
 
 
-/*
+/* response
 Asset {
   code: 'TESTTOKEN',
   issuer: 'GCKFBEIYV2U22IO2BJ4KVJOIP7XPWQGQFKKWXR6DOSJBV7STMAQSMTGG'
@@ -213,11 +213,12 @@ const tokenName = 'TESTTOKEN';
 (async() => {
   const token = Token.create(tokenName, issuerPubkey);
   const res = await Token.trustline(receiverSecret, token);
+  console.log(res.hash);
 })();
 
-/*
+/* response
 
-* response is `Horizon.SubmitTransactionResponse` object
+c176fc1c71dd93c95fd49aef841410ed6eec3dc8937ea13202eb2241a919871c
 
 */
 ```
@@ -239,13 +240,13 @@ const receiverPubkey = 'GBFXT3XP46G4PNMYM67IN5TC76ZVGBZVV2YTRP23D2IMBXAL2HAWGRO6
     senderSecret,
     amount,
   )();
-  console.log(res);
+  console.log(res.hash);
 })();
 
 
-/*
+/* response
 
-* response is `Horizon.SubmitTransactionResponse` object
+b3da4cfb11cc918637f2fb4fc05ffda97b6b3cb13e1d44ca5531926d84d77e7e
 
 */
 ```
@@ -279,14 +280,71 @@ const receiver = {
     amount,
     token,
   )();
-  console.log(res);
+  console.log(res.hash);
 })();
 
-/*
 
-* response is `Horizon.SubmitTransactionResponse` object
+/* response
+
+c37ee2b833350e4535085061934f797f3c5497a6156618c6f29ea68789fa7f1f
 
 */
 ```
 
+### Multisig
+
+* Set multiple signers in a target address
+
+```js
+
+const {
+  Multisig
+} = require('stellar-suite');
+
+
+const signer = {
+  pubkey: 'GBKRTWUPAIABKFIK3FWZYOR2TXM5SHD4NUV225AAOFCV2HTWVEBUDUAC',
+  secret: 'SCP5L3JUL4YP62BCUAXY3YXOIRLP3VYRXETANE53QSHKB6D2AMTY52K2'
+};
+
+const signer2 = {
+  pubkey: 'GB4UYUVCYSAD73QHSPOK3HP3TFIJFE4VWCBMRFQSQDFXGAA4ZXPQYH4F',
+  secret: 'SA67M7KTRTPMGWPHX34W3PA5LWTYJXNGFZUYPJS7MV5WZR5V5EAGURST'
+};
+
+const target = {
+  pubkey: 'GA62CTAT6MCN5BPULVHCF5R44HO4V6M2JPXLGL55DRXNWS2TWVICOOC4',
+  secret: 'SCQSPQESX2TFHOWJV4AF4FBFZVOC4X5JFR6VOJZ2L4K6YSW3XRVLTUAU'
+};
+
+(async () => {
+  const res = await Multisig.set(
+    target.secret,
+    [
+      {
+        pubkey: signer.pubkey,
+        weight: 1
+      },
+      {
+        pubkey: signer2.pubkey,
+        weight: 1
+      },
+    ],
+    {
+      masterWeight: 1,
+      lowThreshold: 1,
+      medThreshold: 2,
+      highThreshold: 3
+    }
+  )();
+  console.log(res.hash);
+})();
+
+
+/* resposne
+
+cacb5986cfdab2b2d7beb3b279da7bdfc0ac43c174356868b49d8f92c211d45c
+
+*/
+```
 

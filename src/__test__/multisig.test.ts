@@ -3,7 +3,7 @@ import {Account} from '../account';
 
 let target = {pubkey: '', secret: ''}
 let target2 = {pubkey: '', secret: ''}
-let siger = {pubkey: '', secret: ''}
+let signer = {pubkey: '', secret: ''}
 let siger2 = {pubkey: '', secret: ''}
 
 describe('Stellar.Multisig', () => {
@@ -12,8 +12,8 @@ describe('Stellar.Multisig', () => {
     console.log('created target.', target);
     target2 = await Account.createTestnet();
     console.log('created target2.', target2);
-    siger = await Account.createTestnet();
-    console.log('created siger.', siger);
+    signer = await Account.createTestnet();
+    console.log('created siger.', signer);
     siger2 = await Account.createTestnet();
     console.log('created siger2.', siger2);
   })
@@ -23,7 +23,7 @@ describe('Stellar.Multisig', () => {
       target.secret,
       [
         {
-          pubkey: siger.pubkey,
+          pubkey: signer.pubkey,
           weight: 1
         }],
       {
@@ -42,7 +42,7 @@ describe('Stellar.Multisig', () => {
       target2.secret,
       [
         {
-          pubkey: siger.pubkey,
+          pubkey: signer.pubkey,
           weight: 1
         },
         {
