@@ -2,7 +2,7 @@ export * from './account';
 export * from './token';
 export * from './payment';
 export * from './multisig';
-export * from './storage';
+export * from './memo';
 export * from './horizon';
 export * from './swarm';
 export * from './transaction';
