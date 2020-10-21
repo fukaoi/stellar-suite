@@ -207,19 +207,22 @@ Asset {
 const {Token} = require('stellar-suite');
 
 const issuerPubkey = 'GCKFBEIYV2U22IO2BJ4KVJOIP7XPWQGQFKKWXR6DOSJBV7STMAQSMTGG';
+const receiverSecret = 'SAMTOLCOEJYAD5JUKP2XUVMGJ3QZ77E26T64PMGXDXLAYX5AQN7CFGTR';
 const tokenName = 'TESTTOKEN';
 
 (async() => {
-  const res = Token.create(tokenName, issuerPubkey);
+  try {
+  const token = Token.create(tokenName, issuerPubkey);
+  const res = await Token.trustline(receiverSecret, token);
   console.log(res);
+  } catch (e) {
+    console.error(e);
+  }
 })();
 
-
 /*
-Asset {
-  code: 'TESTTOKEN',
-  issuer: 'GCKFBEIYV2U22IO2BJ4KVJOIP7XPWQGQFKKWXR6DOSJBV7STMAQSMTGG'
-}
+
+* response is `Horizon.SubmitTransactionResponse` object
 */
 ```
 
