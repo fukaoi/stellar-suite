@@ -1,0 +1,46 @@
+{
+	"name": "stellar-suite",
+	"version": "1.0.0",
+	"description": "Be suitable stellar library made by ayanasu co.",
+	"main": "dist/index.js",
+	"private": true,
+	"scripts": {
+		"clean": "rm -rf dist",
+		"build": "tsc && webpack --config webpack.config-dev.js",
+		"build.prd": "tsc && webpack --config webpack.config.js",
+		"test": "jest --runInBand --detectOpenHandles --no-cache",
+		"postinstall": "npm run build.prd"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+ssh://git@github.com/ayanasu/stellar-suite.git"
+	},
+	"keywords": [
+		"common",
+		"lib"
+	],
+	"author": "fukaoi",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/ayanasu/stellar-suite/issues"
+	},
+	"homepage": "https://github.com/ayanasu/stellar-suite#readme",
+	"dependencies": {
+		"awesome-typescript-loader": "^5.2.1",
+		"stellar-sdk": "^6.0.0",
+		"ts-loader": "^8.0.5",
+		"ts-node": "^9.0.0",
+		"typescript": "^4.0.3",
+		"web3-bzz": "^1.3.0",
+		"webpack": "^4.42.1",
+		"webpack-cli": "^3.3.11",
+		"webpack-merge": "^4.2.2"
+	},
+	"devDependencies": {
+		"@types/jest": "^26.0.14",
+		"@types/node": "^12.12.62",
+		"jest": "^26.4.2",
+		"jest-cli": "^26.4.2",
+		"ts-jest": "^26.4.0"
+	}
+}

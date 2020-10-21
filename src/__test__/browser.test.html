@@ -1,0 +1,24 @@
+<!-- Should run `npm run build.browser`in cli before check  -->
+<html>
+
+<head>
+  <!-- <script type="text/javascript" src="../../dist/browser/stellar-suite.js"> -->
+  <script type="text/javascript" src="../../dist/browser/stellar-suite-dev.js">
+  </script>
+</head>
+
+<body>
+  <script>
+    (async () => {
+      // Get transaction by stream data
+      const pubkey = 'GCKFBEIYV2U22IO2BJ4KVJOIP7XPWQGQFKKWXR6DOSJBV7STMAQSMTGG';
+      const fn = StellarSuite.Transaction.stream(pubkey, console.log)();
+
+      // Store ethereum swarm storage
+      StellarSuite.Swarm.connect();
+      console.log(await StellarSuite.Swarm.set('dummy'));
+    })();
+  </script>
+</body>
+
+</html>
