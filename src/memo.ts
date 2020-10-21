@@ -33,7 +33,7 @@ export namespace Memo {
   }
 }
 
-export type StorageType =
+export type MemoType =
   _Memo<
     MemoType.ID |
     MemoType.Hash |

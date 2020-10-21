@@ -4,7 +4,7 @@ import {
 } from 'stellar-sdk';
 
 import {Transaction} from './transaction';
-import {StorageType} from './storage';
+import {MemoType} from './memo';
 
 interface Signer {
   pubkey: string,
@@ -33,7 +33,7 @@ export namespace Multisig {
       highThreshold: number,
     },
   ) => async (
-    memo?: StorageType,
+    memo?: MemoType,
     feeSourceSecret?: string,
     feeMultiplication?: number,
     timeout?: number

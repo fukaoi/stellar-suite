@@ -13,7 +13,7 @@ import {
 
 import {Horizon as _Horizon} from './horizon';
 import {Account} from './account';
-import {Storage, StorageType} from './storage';
+import {Memo, MemoType} from './memo';
 import {StellarSuiteError} from './error';
 
 interface Callback {
@@ -92,7 +92,7 @@ export namespace Transaction {
   export const submit = async (
     senderSecret: string,
     operation: xdr.Operation | xdr.Operation[],
-    memo: StorageType = Storage.none(),
+    memo: MemoType = Memo.none(),
     feeSourceSecret = '',
     feeMultiplication = 1,
     timeout = 3,

@@ -5,7 +5,7 @@ import {
 } from 'stellar-sdk';
 
 import {Transaction} from './transaction';
-import {StorageType} from './storage';
+import {MemoType} from './memo';
 
 export namespace Payment {
   export const send = (
@@ -14,7 +14,7 @@ export namespace Payment {
     amount: string,
     token = Asset.native(),
   ) => async (
-    memo?: StorageType,
+    memo?: MemoType,
     feeSourceSecret?: string,
     feeMultiplication?: number,
     timeout?: number

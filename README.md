@@ -350,57 +350,22 @@ cacb5986cfdab2b2d7beb3b279da7bdfc0ac43c174356868b49d8f92c211d45c
 
 ### Memo
 
-* Set multiple signers in a target address
+* In stellar specific, MemoText is 28kbyte limit. this library internal use Ethereum Swarm, So stored over 28kbyte string.
 
 ```js
 
 const {
-  Multisig
+  Memo
 } = require('stellar-suite');
 
-
-const signer = {
-  pubkey: 'GBKRTWUPAIABKFIK3FWZYOR2TXM5SHD4NUV225AAOFCV2HTWVEBUDUAC',
-  secret: 'SCP5L3JUL4YP62BCUAXY3YXOIRLP3VYRXETANE53QSHKB6D2AMTY52K2'
-};
-
-const signer2 = {
-  pubkey: 'GB4UYUVCYSAD73QHSPOK3HP3TFIJFE4VWCBMRFQSQDFXGAA4ZXPQYH4F',
-  secret: 'SA67M7KTRTPMGWPHX34W3PA5LWTYJXNGFZUYPJS7MV5WZR5V5EAGURST'
-};
-
-const target = {
-  pubkey: 'GA62CTAT6MCN5BPULVHCF5R44HO4V6M2JPXLGL55DRXNWS2TWVICOOC4',
-  secret: 'SCQSPQESX2TFHOWJV4AF4FBFZVOC4X5JFR6VOJZ2L4K6YSW3XRVLTUAU'
-};
-
 (async () => {
-  const res = await Multisig.set(
-    target.secret,
-    [
-      {
-        pubkey: signer.pubkey,
-        weight: 1
-      },
-      {
-        pubkey: signer2.pubkey,
-        weight: 1
-      },
-    ],
-    {
-      masterWeight: 1,
-      lowThreshold: 1,
-      medThreshold: 2,
-      highThreshold: 3
-    }
-  )();
-  console.log(res.hash);
+  const res = Memo.text('0'.repeat(28));
+  console.log(res);
 })();
-
 
 /* resposne
 
-cacb5986cfdab2b2d7beb3b279da7bdfc0ac43c174356868b49d8f92c211d45c
+Memo { _type: 'text', _value: '0000000000000000000000000000' }
 
 */
 ```

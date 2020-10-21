@@ -1,6 +1,6 @@
 import {Payment} from '../payment';
 import {Token} from '../token';
-import {Storage} from '../storage';
+import {Memo} from '../memo';
 import {Account} from '../account';
 
 let issuer = {pubkey: '', secret: ''}
@@ -51,7 +51,7 @@ describe('Stellar.Payment', () => {
       sender.secret,
       amount,
     )(
-      Storage.text('test')
+      Memo.text('test')
     );
     console.log(res.hash);
     expect(res.hash).toBeDefined();
@@ -70,7 +70,7 @@ describe('Stellar.Payment', () => {
       sender.secret,
       amount,
     )(
-      await Storage.Swarm.setText(JSON.stringify(dummy))
+      await Memo.Swarm.setText(JSON.stringify(dummy))
     );
     console.log(res.hash);
     expect(res.hash).toBeDefined();
@@ -83,7 +83,7 @@ describe('Stellar.Payment', () => {
       sender.secret,
       amount,
     )(
-      Storage.none(),
+      Memo.none(),
       feeSource.secret
     );
     console.log(res.hash);

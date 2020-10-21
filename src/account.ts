@@ -9,7 +9,8 @@ import StellarBase, {
 
 import {Horizon as _Horizon} from './horizon';
 import {Transaction} from './transaction';
-import {StorageType} from './storage';
+import {MemoType} from './jemo';
+import {MemoType} from './memo';
 
 export namespace Account {
   const parseBalance = (balances: Horizon.BalanceLine[], token: string) => {
@@ -56,7 +57,7 @@ export namespace Account {
     creatorSecret: string,
     startingBalance = '1.0'
   ) => async (
-    memo?: StorageType,
+    memo?: MemoType,
     feeSourceSecret?: string,
     feeMultiplication?: number,
     timeout?: number
