@@ -1,6 +1,6 @@
 # stellar-suite
 
-## Install 
+## How to install 
  
 ```shell
 npm install stellar-suite 
