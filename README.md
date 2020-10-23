@@ -350,7 +350,7 @@ cacb5986cfdab2b2d7beb3b279da7bdfc0ac43c174356868b49d8f92c211d45c
 
 ### Memo
 
-* In stellar specific, can use MemoText MemoId, MemoHash.
+* In stellar specific, can use MemoText MemoId, MemoHash, MemoReturn.
 
 ```js
 
