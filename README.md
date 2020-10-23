@@ -4,11 +4,6 @@
  
 ```shell
 npm install stellar-suite 
-
-or
-
-npm install https://github.com/ayanasu/stellar-suite
-
 ```
 
 ## The difference development(test) test and production enviroment
