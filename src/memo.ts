@@ -7,7 +7,7 @@ import {Swarm as _Swarm} from './swarm';
 
 
 export namespace Memo {
-  export const none = (): _Memo<_MemoType.None> => Memo.none();
+  export const none = (): _Memo<_MemoType.None> => _Memo.none();
 
   export const text = (text: string): _Memo<_MemoType.Text> =>
     _Memo.text(text);
@@ -17,6 +17,9 @@ export namespace Memo {
 
   export const hash = (str: string): _Memo<_MemoType.Hash> =>
     _Memo.hash(str);
+
+  export const refund = (str: string): _Memo<_MemoType.Return> =>
+    _Memo.return(str);
 
   export namespace Swarm {
     export const setText = async (text: string): Promise<_Memo> => {

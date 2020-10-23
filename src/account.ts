@@ -9,7 +9,6 @@ import StellarBase, {
 
 import {Horizon as _Horizon} from './horizon';
 import {Transaction} from './transaction';
-import {MemoType} from './jemo';
 import {MemoType} from './memo';
 
 export namespace Account {
