@@ -1,21 +1,21 @@
 import {
   Memo as _Memo, 
-  MemoType,
+  MemoType as _MemoType
 } from 'stellar-sdk';
 
 import {Swarm as _Swarm} from './swarm';
 
 
 export namespace Memo {
-  export const none = (): _Memo<MemoType.None> => Memo.none();
+  export const none = (): _Memo<_MemoType.None> => Memo.none();
 
-  export const text = (text: string): _Memo<MemoType.Text> =>
+  export const text = (text: string): _Memo<_MemoType.Text> =>
     _Memo.text(text);
 
-  export const id = (num: string): _Memo<MemoType.ID> =>
+  export const id = (num: string): _Memo<_MemoType.ID> =>
     _Memo.id(num);
 
-  export const hash = (str: string): _Memo<MemoType.Hash> =>
+  export const hash = (str: string): _Memo<_MemoType.Hash> =>
     _Memo.hash(str);
 
   export namespace Swarm {
@@ -35,9 +35,9 @@ export namespace Memo {
 
 export type MemoType =
   _Memo<
-    MemoType.ID |
-    MemoType.Hash |
-    MemoType.None |
-    MemoType.Text |
-    MemoType.Return
+    _MemoType.ID |
+    _MemoType.Hash |
+    _MemoType.None |
+    _MemoType.Text |
+    _MemoType.Return
   >;
