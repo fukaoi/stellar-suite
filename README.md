@@ -116,6 +116,25 @@ import Stellar,{
 
 * Create account(notice: development is createTestnet function)
 
+* Account.create() usage
+
+```js
+
+Account.create('must params')('optional params')
+
+```
+
+|**optional param**    |**description** |
+|----------|--------------------------|
+|memo(Memo)|MemoType Object|
+|feeSource| for delegate account  when want use `feeBump` function|
+|feeMultiplication| for delegate account  when want use `feeBump` function|
+
+    memo: Memo.text('Optional Params'),
+    feeSource: feeSource.secret,
+    feeMulti: 2,
+    timeout: 30,
+
 #### development
 
 ```js
@@ -156,7 +175,7 @@ const creatorSec = 'SD4WH2AE5EBE72K4BIX5GLFVASV45HKRIA5MXVDJ7MNPMMXCGIJZX5SN';
 */
 ```
 
-* All set params that must param and optional param'
+* All set params that must param and optional param
 
 ```js
 
@@ -184,7 +203,7 @@ const feeSource ={
   const optinalParams = {
     memo: Memo.text('Optional Params'),
     feeSource: feeSource.secret,
-    feeMulti: 2,
+    feeMultiplication: 2,
     timeout: 30,
   }
 
@@ -194,7 +213,7 @@ const feeSource ={
   )(
     optinalParams.memo,
     optinalParams.feeSource,
-    optinalParams.feeMulti,
+    optinalParams.feeMultiplication,
     optinalParams.timeout,
   );
   console.log(res);
