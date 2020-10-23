@@ -65,6 +65,36 @@ describe('Stellar.Account', () => {
     });
   });
 
+  test.only('2', async () => {
+    const createtor = await Account.createTestnet();
+    const mustParams = {
+      secret: createtor.secret,
+      startingBalance: '100',
+    }
+
+    const optinalParams = {
+      memo: Memo.text('Optional Params'),
+      feeSource: feeSource.secret,
+      feeMultiplication: 2,
+      timeout: 30,
+    }
+
+    const res = await Account.create(
+      mustParams.secret,
+      mustParams.startingBalance,
+    )(
+      optinalParams.memo,
+      optinalParams.feeSource,
+      optinalParams.feeMultiplication,
+      optinalParams.timeout,
+    );
+    expect(res).toEqual({
+      pubkey: expect.anything(),
+      secret: expect.anything()
+    });
+  });
+
+
   test('Get balance xlm', async () => {
     const creator = await Account.createTestnet();
     const account = await Account.create(creator.secret)();
