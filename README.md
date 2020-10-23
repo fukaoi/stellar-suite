@@ -242,10 +242,8 @@ const {Token} = require('stellar-suite');
 const issuerPubkey = 'GCKFBEIYV2U22IO2BJ4KVJOIP7XPWQGQFKKWXR6DOSJBV7STMAQSMTGG';
 const tokenName = 'TESTTOKEN';
 
-(async() => {
-  const res = Token.create(tokenName, issuerPubkey);
-  console.log(res);
-})();
+const res = Token.create(tokenName, issuerPubkey);
+console.log(res);
 
 
 /* response
@@ -413,10 +411,8 @@ const {
   Memo
 } = require('stellar-suite');
 
-(async () => {
-  const res = Memo.text('0'.repeat(28));
-  console.log(res);
-})();
+const res = Memo.text('0'.repeat(28));
+console.log(res);
 
 /* resposne
 
@@ -434,11 +430,9 @@ const {
   Memo
 } = require('stellar-suite');
 
-(async () => {
-  const data = 'In a more restrained appearance, President Trump depicted Joseph R. Biden Jr. as an ineffectual Washington insider. Mr. Biden accused the president of heartlessness for separating migrant families and inflaming racial tensions. by New York Times(23/10/20)';
-  const res = await Memo.Swarm.setText(data);
-  console.log(res);
-})();
+const data = 'In a more restrained appearance, President Trump depicted Joseph R. Biden Jr. as an ineffectual Washington insider. Mr. Biden accused the president of heartlessness for separating migrant families and inflaming racial tensions. by New York Times(23/10/20)';
+const res = await Memo.Swarm.setText(data);
+console.log(res);
 
 /* response
  
