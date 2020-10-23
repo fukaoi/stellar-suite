@@ -46,7 +46,7 @@ describe('Stellar.Account', () => {
     const optinalParams = {
       memo: Memo.text('Optional Params'),
       feeSource: feeSource.secret,
-      feeMulti: 2,
+      feeMultiplication: 2,
       timeout: 30,
     }
 
@@ -56,7 +56,7 @@ describe('Stellar.Account', () => {
     )(
       optinalParams.memo,
       optinalParams.feeSource,
-      optinalParams.feeMulti,
+      optinalParams.feeMultiplication,
       optinalParams.timeout,
     );
     expect(res).toEqual({
@@ -71,21 +71,6 @@ describe('Stellar.Account', () => {
     const res = await Account.getBalance(account.pubkey);
     expect(res.raw).toEqual('1.0000000');
     expect(res.float).toEqual('1');
-  });
-
-  test('Get balance dummy token', async () => {
-    const dummyToken = 'SPEC';
-    const token = Token.create(dummyToken, issuer.pubkey);
-    await Token.trustline(receiver.secret, token);
-    await Payment.send(
-      receiver.pubkey,
-      issuer.secret,
-      '777',
-      token,
-    )();
-    const res = await Account.getBalance(receiver.pubkey, dummyToken);
-    expect(res.raw).toEqual('777.0000000');
-    expect(res.float).toEqual('777');
   });
 
   test('Get balance dummy token', async () => {

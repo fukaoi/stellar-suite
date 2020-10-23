@@ -48,7 +48,6 @@ describe('Stellar.Horizon', () => {
       done();
     });
   });
-
 });
 
 jest.setTimeout(60000);

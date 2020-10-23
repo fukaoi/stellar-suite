@@ -14,7 +14,7 @@ import {
 import {Horizon as _Horizon} from './horizon';
 import {Account} from './account';
 import {Memo, MemoType} from './memo';
-import {StellarSuiteError} from './error';
+import {isFunctionExpression} from 'typescript';
 
 interface Callback {
   (res: any): void
@@ -25,12 +25,13 @@ export namespace Transaction {
 
   const createFeeBumpTransaction = async (
     feeSourceSecret: string,
-    innerTx: _Transaction
+    fee: string,
+    innerTx: _Transaction,
   ) => {
     const feeSourceKeypair = Keypair.fromSecret(feeSourceSecret);
     const tx = TransactionBuilder.buildFeeBumpTransaction(
       feeSourceKeypair,
-      await estimatedFee(),
+      fee,
       innerTx,
       _Horizon.network(),
     );
@@ -99,9 +100,10 @@ export namespace Transaction {
   ): Promise<Horizon.SubmitTransactionResponse> => {
     try {
       const keypairs = await Account.keypairAccount(senderSecret);
+      const fixedFee = await estimatedFee(feeMultiplication);
 
       const builderOption = {
-        fee: await estimatedFee(feeMultiplication),
+        fee: fixedFee,
         networkPassphrase: _Horizon.network()
       }
 
@@ -129,13 +131,17 @@ export namespace Transaction {
       transaction.sign(keypairs.keypair)
 
       if (feeSourceSecret !== '') {
-        const bump = await createFeeBumpTransaction(feeSourceSecret, transaction);
+        const bump = await createFeeBumpTransaction(
+          feeSourceSecret,
+          fixedFee,
+          transaction
+        );
         return await _Horizon.connect().submitTransaction(bump)
       } else {
         return await _Horizon.connect().submitTransaction(transaction)
       }
     } catch (e) {
-      if (!(e instanceof StellarSuiteError)) {
+      if (e.response) {
         switch (e.response.data.status) {
           case 504:
             console.count(`[504 Error] Retry. ${retryCount}`);
