@@ -350,7 +350,7 @@ cacb5986cfdab2b2d7beb3b279da7bdfc0ac43c174356868b49d8f92c211d45c
 
 ### Memo
 
-* In stellar specific, MemoText is 28kbyte limit. this library internal use Ethereum Swarm, So stored over 28kbyte string.
+* In stellar specific, can use MemoText MemoId, MemoHash.
 
 ```js
 
@@ -369,4 +369,59 @@ Memo { _type: 'text', _value: '0000000000000000000000000000' }
 
 */
 ```
+
+* In stellar specific, MemoText is 28kbyte limit. this library internal use Ethereum Swarm, So stored over 28kbyte string.
+
+
+```js
+
+const {
+  Memo
+} = require('stellar-suite');
+
+(async () => {
+  const data = 'In a more restrained appearance, President Trump depicted Joseph R. Biden Jr. as an ineffectual Washington insider. Mr. Biden accused the president of heartlessness for separating migrant families and inflaming racial tensions. by New York Times(23/10/20)';
+  const res = await Memo.Swarm.setText(data);
+  console.log(res);
+})();
+
+/* response
+ 
+Memo {
+  _type: 'hash',
+  _value: <Buffer 43 1d eb 15 22 07 0a 1c dd 0e e4 8d 7f c2 15 3b 49 c5 4f 0a 36 31 c8 7
+e 1f d6 72 6b de b6 d3 0a>
+}
+
+*/
+```
+
+* To Get stored data from swarm,  Use encoded memo data in transaction and set in Memo.Swarm.setText('encoded data')
+
+
+
+```js
+
+const {
+  Memo
+} = require('stellar-suite');
+
+(async () => {
+  const memoHash = 'Qs5GwukTIsifv+X23AaoRqDhK9VCSnzzsqPpae0Enns=';
+  const res = await Memo.Swarm.getText(memoHash);
+  console.log(res);
+})();
+
+/* response
+
+Btesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest
+testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest
+testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest
+testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest
+testtesttesttesttesttesttesttesttesttesttesttesttesttesttest
+
+*/
+
+```
+
 
