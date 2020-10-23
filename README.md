@@ -155,6 +155,61 @@ const creatorSec = 'SD4WH2AE5EBE72K4BIX5GLFVASV45HKRIA5MXVDJ7MNPMMXCGIJZX5SN';
 }
 */
 ```
+
+* All set params that must param and optional param'
+
+```js
+
+const {
+  Account,
+  Memo
+} = require('stellar-suite');
+
+const createtor = {
+  pubkey: 'GBFCIBLNLSSIM4L662UTIVSMF2CDGM3U7VRMM7D6ECZAKQRSPDRIYKZW',
+  secret: 'SDSIMAPJJC3K4EODTIZGQEKLKSIR2YE2R73V77X6LWVDRLJ5W73EFKW2'
+};
+
+const feeSource ={
+  pubkey: 'GAOLT2JOFLPGVMHI56F6D6UIFJROTZ3O47APWBR3JNOYKXFCZ5TL2QDG',
+  secret: 'SCNFMAJ236JZSPFFTKTZCEDWXCKWB62A36PWSYKG7DZCQJJZ3OBOOYD6'
+};
+
+(async () => {
+  const mustParams = {
+    secret: createtor.secret,
+    startingBalance: '100',
+  }
+
+  const optinalParams = {
+    memo: Memo.text('Optional Params'),
+    feeSource: feeSource.secret,
+    feeMulti: 2,
+    timeout: 30,
+  }
+
+  const res = await Account.create(
+    mustParams.secret,
+    mustParams.startingBalance,
+  )(
+    optinalParams.memo,
+    optinalParams.feeSource,
+    optinalParams.feeMulti,
+    optinalParams.timeout,
+  );
+  console.log(res);
+})();
+
+/* response
+
+{
+  pubkey: 'GB4RN5TOY25BLJTFRU72WG6W65MGEDA6L3VYO5VCRD2B7ZZK76Y7BHQB',
+  secret: 'SDMN5XZ55XO4ODOS37HKCKTMYA57OXT3YF777TATNCP5RCQ4JYOSCKW5'
+}
+
+*/
+
+```
 * Get balance(xlm, token) from target address. response is two types.
 
 ```js
