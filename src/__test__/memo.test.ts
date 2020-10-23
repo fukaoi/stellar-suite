@@ -21,6 +21,12 @@ describe('Stellar.Horizon', () => {
     expect(res instanceof _Memo).toBeTruthy();
   });
 
+  test('set refund data', () => {
+    const hash = 'b36f330c6db84bef6ca34057c9739b88115565cf873fdb1350e481140a4429ad';
+    const res = Memo.refund(hash);
+    expect(res instanceof _Memo).toBeTruthy();
+  });
+
   test('Set large data text to swarm ', async () => {
     const data = 'C'.repeat(9999999);
     const res = await Memo.Swarm.setText(data);
