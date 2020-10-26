@@ -8,7 +8,7 @@ import StellarBase, {
 } from 'stellar-base';
 
 import {Horizon as _Horizon} from './horizon';
-import {Transaction} from './transaction';
+import {Transaction, Optional} from './transaction';
 import {MemoType} from './memo';
 
 export namespace Account {
@@ -31,7 +31,7 @@ export namespace Account {
   export const getBalance = async (pubkey: string, token = 'native'): Promise<{raw: string, float: string}> => {
     const account = await _Horizon.connect().loadAccount(pubkey);
     const rawBalance = parseBalance(account.balances, token);
-    const floatBalance = Number.parseFloat(rawBalance).toString(); 
+    const floatBalance = Number.parseFloat(rawBalance).toString();
     return {raw: rawBalance, float: floatBalance};
   }
 
@@ -52,28 +52,24 @@ export namespace Account {
     }
   }
 
-  export const create = (
+  export const create = async (
     creatorSecret: string,
-    startingBalance = '1.0'
-  ) => async (
-    memo?: MemoType,
-    feeSourceSecret?: string,
-    feeMultiplication?: number,
-    timeout?: number
+    startingBalance = '1.0',
+    optional: Optional = {}
   ): Promise<{pubkey: string, secret: string}> => {
-      const keypair = createKeyPair();
-      const operation = Operation.createAccount({
-        destination: keypair.pubkey,
-        startingBalance: startingBalance,
-      })
-      await Transaction.submit(
-        creatorSecret,
-        operation,
-        memo,
-        feeSourceSecret,
-        feeMultiplication,
-        timeout
-      );
-      return keypair;
-    }
+    const keypair = createKeyPair();
+    const operation = Operation.createAccount({
+      destination: keypair.pubkey,
+      startingBalance: startingBalance,
+    })
+    await Transaction.submit(
+      creatorSecret,
+      operation,
+      optional.memo,
+      optional.feeSourceSecret,
+      optional.feeMultiplication,
+      optional.timeout
+    );
+    return keypair;
+  }
 }

@@ -14,10 +14,16 @@ import {
 import {Horizon as _Horizon} from './horizon';
 import {Account} from './account';
 import {Memo, MemoType} from './memo';
-import {isFunctionExpression} from 'typescript';
 
 interface Callback {
   (res: any): void
+}
+
+export interface Optional {
+  memo?: MemoType,
+  feeSourceSecret?: string,
+  feeMultiplication?: number,
+  timeout?: number
 }
 
 export namespace Transaction {
