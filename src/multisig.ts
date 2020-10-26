@@ -3,8 +3,7 @@ import {
   Operation,
 } from 'stellar-sdk';
 
-import {Transaction} from './transaction';
-import {MemoType} from './memo';
+import {Transaction, Optional} from './transaction';
 
 interface Signer {
   pubkey: string,
@@ -33,20 +32,17 @@ export namespace Multisig {
       highThreshold: number,
     },
   ) => async (
-    memo?: MemoType,
-    feeSourceSecret?: string,
-    feeMultiplication?: number,
-    timeout?: number
+    optional: Optional = {}
   ): Promise<Horizon.SubmitTransactionResponse> => {
       const operations = createSigners(signers);
       operations.push(Operation.setOptions(targetThreshold));
       return await Transaction.submit(
         targetSecret,
         operations,
-        memo,
-        feeSourceSecret,
-        feeMultiplication,
-        timeout,
+        optional.memo,
+        optional.feeSourceSecret,
+        optional.feeMultiplication,
+        optional.timeout,
       );
     }
 }

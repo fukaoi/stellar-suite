@@ -1,5 +1,6 @@
 import {Multisig} from '../multisig';
 import {Account} from '../account';
+import {Memo} from '../memo';
 
 let target = {pubkey: '', secret: ''}
 let target2 = {pubkey: '', secret: ''}
@@ -32,7 +33,11 @@ describe('Stellar.Multisig', () => {
         medThreshold: 1,
         highThreshold: 0
       }
-    )();
+    )(
+      {
+        memo: Memo.text('only a signer')
+      }
+    );
     console.log(res.hash);
     expect(res.hash).toBeDefined();
   });
@@ -56,7 +61,12 @@ describe('Stellar.Multisig', () => {
         medThreshold: 2,
         highThreshold: 3
       }
-    )();
+    )(
+      {
+        memo: Memo.text('multiple signer')
+      }
+
+    );
     console.log(res.hash);
     expect(res.hash).toBeDefined();
   });

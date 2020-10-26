@@ -51,7 +51,9 @@ describe('Stellar.Payment', () => {
       sender.secret,
       amount,
     )(
-      Memo.text('test')
+      {
+        memo: Memo.text('test')
+      }
     );
     console.log(res.hash);
     expect(res.hash).toBeDefined();
@@ -70,7 +72,9 @@ describe('Stellar.Payment', () => {
       sender.secret,
       amount,
     )(
-      await Memo.Swarm.setText(JSON.stringify(dummy))
+      {
+        memo: await Memo.Swarm.setText(JSON.stringify(dummy))
+      }
     );
     console.log(res.hash);
     expect(res.hash).toBeDefined();
@@ -83,8 +87,9 @@ describe('Stellar.Payment', () => {
       sender.secret,
       amount,
     )(
-      Memo.none(),
-      feeSource.secret
+      {
+        feeSourceSecret: feeSource.secret
+      }
     );
     console.log(res.hash);
     expect(res.hash).toBeDefined();

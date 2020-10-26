@@ -9,7 +9,6 @@ import StellarBase, {
 
 import {Horizon as _Horizon} from './horizon';
 import {Transaction, Optional} from './transaction';
-import {MemoType} from './memo';
 
 export namespace Account {
   const parseBalance = (balances: Horizon.BalanceLine[], token: string) => {
@@ -52,24 +51,25 @@ export namespace Account {
     }
   }
 
-  export const create = async (
+  export const create = (
     creatorSecret: string,
     startingBalance = '1.0',
+  ) => async (
     optional: Optional = {}
   ): Promise<{pubkey: string, secret: string}> => {
-    const keypair = createKeyPair();
-    const operation = Operation.createAccount({
-      destination: keypair.pubkey,
-      startingBalance: startingBalance,
-    })
-    await Transaction.submit(
-      creatorSecret,
-      operation,
-      optional.memo,
-      optional.feeSourceSecret,
-      optional.feeMultiplication,
-      optional.timeout
-    );
-    return keypair;
-  }
+      const keypair = createKeyPair();
+      const operation = Operation.createAccount({
+        destination: keypair.pubkey,
+        startingBalance: startingBalance,
+      })
+      await Transaction.submit(
+        creatorSecret,
+        operation,
+        optional.memo,
+        optional.feeSourceSecret,
+        optional.feeMultiplication,
+        optional.timeout
+      );
+      return keypair;
+    }
 }

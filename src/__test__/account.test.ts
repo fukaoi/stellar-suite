@@ -20,7 +20,7 @@ describe('Stellar.Account', () => {
 
   test('createted account and activated', async () => {
     const creator = await Account.createTestnet();
-    const res = await Account.create(creator.secret);
+    const res = await Account.create(creator.secret)();
     expect(res).toEqual({
       pubkey: expect.anything(),
       secret: expect.anything()
@@ -29,7 +29,7 @@ describe('Stellar.Account', () => {
 
   test('createted account and activated with startingBalance', async () => {
     const createtor = await Account.createTestnet();
-    const res = await Account.create(createtor.secret, '10.5');
+    const res = await Account.create(createtor.secret, '10.5')();
     expect(res).toEqual({
       pubkey: expect.anything(),
       secret: expect.anything()
@@ -53,7 +53,8 @@ describe('Stellar.Account', () => {
     const res = await Account.create(
       mustParams.secret,
       mustParams.startingBalance,
-      optinalParams,
+    )(
+      optinalParams
     );
     expect(res).toEqual({
       pubkey: expect.anything(),
@@ -75,7 +76,8 @@ describe('Stellar.Account', () => {
     const res = await Account.create(
       mustParams.secret,
       mustParams.startingBalance,
-      optinalParams,
+    )(
+      optinalParams
     );
     expect(res).toEqual({
       pubkey: expect.anything(),
@@ -85,7 +87,7 @@ describe('Stellar.Account', () => {
 
   test('Get balance xlm', async () => {
     const creator = await Account.createTestnet();
-    const account = await Account.create(creator.secret);
+    const account = await Account.create(creator.secret)();
     const res = await Account.getBalance(account.pubkey);
     expect(res.raw).toEqual('1.0000000');
     expect(res.float).toEqual('1');

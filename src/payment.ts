@@ -4,8 +4,7 @@ import {
   Operation,
 } from 'stellar-sdk';
 
-import {Transaction} from './transaction';
-import {MemoType} from './memo';
+import {Transaction, Optional} from './transaction';
 
 export namespace Payment {
   export const send = (
@@ -14,10 +13,7 @@ export namespace Payment {
     amount: string,
     token = Asset.native(),
   ) => async (
-    memo?: MemoType,
-    feeSourceSecret?: string,
-    feeMultiplication?: number,
-    timeout?: number
+    optional: Optional = {}
   ): Promise<Horizon.SubmitTransactionResponse> => {
       const operation = Operation.payment({
         destination: destPubkey,
@@ -27,10 +23,10 @@ export namespace Payment {
       return await Transaction.submit(
         senderSecret,
         operation,
-        memo,
-        feeSourceSecret,
-        feeMultiplication,
-        timeout,
+        optional.memo,
+        optional.feeSourceSecret,
+        optional.feeMultiplication,
+        optional.timeout,
       );
     }
 }
