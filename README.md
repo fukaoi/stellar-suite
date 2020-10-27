@@ -107,11 +107,11 @@ import Stellar,{
 
 ## Modules description
 
-### Account
+## *Account*
 
-* Create account(notice: development is createTestnet function)
+### Account.create()() - create account
+### Account.createTestnet() - create account for testnet
 
-* Account.create() usage
 
 ```js
 
@@ -240,9 +240,9 @@ const pubkey = 'GCKFBEIYV2U22IO2BJ4KVJOIP7XPWQGQFKKWXR6DOSJBV7STMAQSMTGG';
 */
 ```
 
-### Token
+## *Token*
 
-* create stellar token(official name `asset`)
+### Token.create() - create stellar token(official name `asset`)
 
 ```js
 const {Token} = require('stellar-suite');
@@ -261,8 +261,7 @@ Asset {
 }
 */
 ```
-
-* trustline need to receive token by receiver
+### Token.trustline() - trustline need to receive token by receiver
 
 ```js
 const {Token} = require('stellar-suite');
@@ -284,9 +283,9 @@ c176fc1c71dd93c95fd49aef841410ed6eec3dc8937ea13202eb2241a919871c
 */
 ```
 
-### Payment
+## *Payment*
 
-* Payment.send() usage
+### Payment.send() - send XLM or token
 
 ```js
 
@@ -368,9 +367,10 @@ c37ee2b833350e4535085061934f797f3c5497a6156618c6f29ea68789fa7f1f
 */
 ```
 
-### Multisig
+## *Multisig*
 
-* Multisig.set() usage
+### Multisig.set() - set multi signature
+
 
 ```js
 
@@ -441,9 +441,9 @@ cacb5986cfdab2b2d7beb3b279da7bdfc0ac43c174356868b49d8f92c211d45c
 */
 ```
 
-### Memo
+## *Memo*
 
-* In stellar specific, can use MemoText MemoId, MemoHash, MemoReturn.
+### Memo.text(), Memo.id(), Memo.hash(), Memo.return() 
 
 ```js
 
