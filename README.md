@@ -203,10 +203,7 @@ const feeSource ={
     mustParams.secret,
     mustParams.startingBalance,
   )(
-    optinalParams.memo,
-    optinalParams.feeSource,
-    optinalParams.feeMultiplication,
-    optinalParams.timeout,
+    optinalParams,
   );
   console.log(res);
 })();
