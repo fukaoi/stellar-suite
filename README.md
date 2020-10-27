@@ -107,10 +107,13 @@ import Stellar,{
 
 ## Modules description
 
-## *Account*
+### - *Account* -
 
-### Account.create()() - create account
-### Account.createTestnet() - create account for testnet
+#### Account.create()()
+* create account
+
+#### Account.createTestnet() 
+* create account for testnet
 
 
 ```js
@@ -218,6 +221,9 @@ const feeSource ={
 */
 
 ```
+
+#### Account.getBalance()
+
 * Get balance(xlm, token) from target address. response is two types.
 
 ```js
@@ -240,9 +246,11 @@ const pubkey = 'GCKFBEIYV2U22IO2BJ4KVJOIP7XPWQGQFKKWXR6DOSJBV7STMAQSMTGG';
 */
 ```
 
-## *Token*
+### - *Token* -
 
-### Token.create() - create stellar token(official name `asset`)
+#### Token.create() 
+
+* create stellar token(official name `asset`)
 
 ```js
 const {Token} = require('stellar-suite');
@@ -261,7 +269,9 @@ Asset {
 }
 */
 ```
-### Token.trustline() - trustline need to receive token by receiver
+### Token.trustline() 
+
+* trustline need to receive token by receiver
 
 ```js
 const {Token} = require('stellar-suite');
@@ -283,9 +293,10 @@ c176fc1c71dd93c95fd49aef841410ed6eec3dc8937ea13202eb2241a919871c
 */
 ```
 
-## *Payment*
+### *Payment*
 
-### Payment.send() - send XLM or token
+#### Payment.send() 
+* send XLM or token
 
 ```js
 
@@ -367,9 +378,11 @@ c37ee2b833350e4535085061934f797f3c5497a6156618c6f29ea68789fa7f1f
 */
 ```
 
-## *Multisig*
+### - *Multisig* -
 
-### Multisig.set() - set multi signature
+#### Multisig.set() 
+
+* set multi signature
 
 
 ```js
@@ -441,9 +454,9 @@ cacb5986cfdab2b2d7beb3b279da7bdfc0ac43c174356868b49d8f92c211d45c
 */
 ```
 
-## *Memo*
+### - *Memo* -
 
-### Memo.text(), Memo.id(), Memo.hash(), Memo.return() 
+#### Memo.text(), Memo.id(), Memo.hash(), Memo.return() 
 
 ```js
 
@@ -460,6 +473,8 @@ Memo { _type: 'text', _value: '0000000000000000000000000000' }
 
 */
 ```
+
+#### Memo.Swarm.setText()
 
 * In stellar specific, MemoText is 28kbyte limit. this library internal use Ethereum Swarm, So stored over 28kbyte string.
 
@@ -484,6 +499,8 @@ e 1f d6 72 6b de b6 d3 0a>
 
 */
 ```
+
+### Memo.Swarm.getText()
 
 * To Get stored data from swarm,  Use encoded memo data in transaction and set in Memo.Swarm.setText('encoded data')
 
