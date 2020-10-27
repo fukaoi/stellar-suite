@@ -123,12 +123,9 @@ Account.create('must params')('optional params')
 |----------|--------------------------|
 |memo(Memo)|MemoType Object|
 |feeSource| for delegate account  when want use `feeBump` function|
-|feeMultiplication| for delegate account  when want use `feeBump` function|
+|feeMultiplication| default=100. 100 * feeMultiplication|
+|timeout|set transaction timeout|
 
-    memo: Memo.text('Optional Params'),
-    feeSource: feeSource.secret,
-    feeMulti: 2,
-    timeout: 30,
 
 #### development
 
@@ -292,6 +289,22 @@ c176fc1c71dd93c95fd49aef841410ed6eec3dc8937ea13202eb2241a919871c
 
 ### Payment
 
+* Payment.send() usage
+
+```js
+
+Payment.send('must params')('optional params')
+
+```
+
+|**optional param**    |**description** |
+|----------|--------------------------|
+|memo(Memo)|MemoType Object|
+|feeSource| for delegate account  when want use `feeBump` function|
+|feeMultiplication| default=100. 100 * feeMultiplication|
+|timeout|set transaction timeout|
+
+
 * send 1 XLM to receiver address
 
 ```js
@@ -359,6 +372,22 @@ c37ee2b833350e4535085061934f797f3c5497a6156618c6f29ea68789fa7f1f
 ```
 
 ### Multisig
+
+* Multisig.set() usage
+
+```js
+
+Multisig.set('must params')('optional params')
+
+```
+
+|**optional param**    |**description** |
+|----------|--------------------------|
+|memo(Memo)|MemoType Object|
+|feeSource| for delegate account  when want use `feeBump` function|
+|feeMultiplication| default=100. 100 * feeMultiplication|
+|timeout|set transaction timeout|
+
 
 * Set multiple signers in a target address
 
