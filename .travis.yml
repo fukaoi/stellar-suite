@@ -4,6 +4,7 @@ node_js:
   - 'node'
 
 before_install:
+  - npm install typescript
   - npm install
 
 script:

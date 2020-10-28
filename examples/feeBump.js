@@ -45,7 +45,12 @@ const createAccount = async () => {
     const token = Token.create('TEST', issuer.pubkey);
 
     // once ok!
-    await Token.trustline(receiver.secret, token);
+    await Token.trustline(
+      receiver.secret, 
+      token
+    )({
+      feeSourceSecret: feeSource.secret
+    });
 
 
     // add memo
