@@ -1,5 +1,7 @@
 # stellar-suite
 
+<img src="docs/stellar-suite-logo.png">
+
 ## How to install 
  
 ```shell
