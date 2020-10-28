@@ -23,7 +23,7 @@ describe('Stellar.Payment', () => {
 
   test('token(asset) send', async () => {
     const token = Token.create(dummyToken, issuer.pubkey);
-    await Token.trustline(receiver.secret, token);
+    await Token.trustline(receiver.secret, token)();
     const amount = '1';
     const res = await Payment.send(
       receiver.pubkey,

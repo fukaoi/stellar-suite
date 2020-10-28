@@ -96,7 +96,7 @@ describe('Stellar.Account', () => {
   test('Get balance dummy token', async () => {
     const dummyToken = 'SPEC';
     const token = Token.create(dummyToken, issuer.pubkey);
-    await Token.trustline(receiver.secret, token);
+    await Token.trustline(receiver.secret, token)();
     await Payment.send(
       receiver.pubkey,
       issuer.secret,

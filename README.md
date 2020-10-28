@@ -301,7 +301,7 @@ const tokenName = 'TESTTOKEN';
 
 (async() => {
   const token = Token.create(tokenName, issuerPubkey);
-  const res = await Token.trustline(receiverSecret, token);
+  const res = await Token.trustline(receiverSecret, token)();
   console.log(res.hash);
 })();
 
@@ -378,7 +378,7 @@ const receiver = {
 
 (async () => {
   const token = Token.create('TEST', issuer.pubkey);
-  await Token.trustline(receiver.secret, token);
+  await Token.trustline(receiver.secret, token)();
   const amount = '1';
   const res = await Payment.send(
     receiver.pubkey,
