@@ -94,7 +94,27 @@ export namespace Transaction {
     _Horizon.connect().transactions().forAccount(targetPubkey)
       .call()
       .then(res => callback(res))
+      .then(res => callback(res))
   }
+
+  // export const get2 = (
+    // targetPubkey: string,
+    // callback: Callback
+  // ) => (
+    // cursor?: Cursor,
+    // order?: Order,
+    // limit?: number,
+    // ) => {
+      // if (!cursor) cursor = Cursor.FromPast;
+      // if (!order) order = Order.Asc;
+      // if (!limit) limit = 50;
+      // _Horizon.connect().transactions().forAccount(targetPubkey)
+        // .cursor(cursor)
+        // .order(order)
+        // .limit(limit)
+      // .call()
+      // .then(res => callback(res))
+    // }
 
   export const submit = async (
     senderSecret: string,

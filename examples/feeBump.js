@@ -44,9 +44,9 @@ const createAccount = async () => {
     // create token and trustline
     const token = Token.create('TEST', issuer.pubkey);
 
-    // once ok!
+    // once call
     await Token.trustline(
-      receiver.secret, 
+      receiver.secret,
       token
     )({
       feeSourceSecret: feeSource.secret
@@ -76,14 +76,16 @@ const createAccount = async () => {
       memo: memo,
       feeSourceSecret: feeSource.secret
     });
-    console.log(res);
 
     // get transaction datas from a account
     Transaction.get(receiver.pubkey, (txs) => {
+      console.log(txs.records.length);
       txs.records.forEach(async (tx) => {
         // get memo text 
-        tx.memo_type === 'hash' &&
+        console.log(tx.memo_type, tx.hash);
+        if (tx.memo_type === 'hash') {
           console.log(await Memo.Swarm.getText(tx.memo));
+        }
       });
     });
   } catch (e) {
