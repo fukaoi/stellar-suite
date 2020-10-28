@@ -1,18 +1,11 @@
 language: node_js
 
 node_js:
-  - 'node'
+  - 'stable'
 
-before_install:
-  - npm install typescript
+install:
   - npm install
 
 script:
   - npm test
 
-cache:
-  directories:
-    - node_modules
-
-git:
-  depth: 1
