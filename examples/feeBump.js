@@ -1,6 +1,11 @@
 /*
  * this code is integration test of production mode
  * before exec, need to create prd-accounts.json file
+ *
+ * `
+ *  // usage
+ *  NODE_ENV=production node examples/feeBump.js
+ * `
  */
 
 const {
@@ -8,11 +13,12 @@ const {
   Token,
   Memo,
   Payment,
+  Transaction,
 } = require('../dist/');
 
 const {
-  issuer, 
-  receiver, 
+  issuer,
+  receiver,
   feeSource
 } = require('./prd-accounts.json');
 
@@ -49,10 +55,9 @@ const createAccount = async () => {
           や若手が少なく、出身や大学にも偏りが見られることも踏まえて判断した」と説明し
           た。菅内閣発足後の本格論戦がスタートした。
 　        自身が掲げた2050年までの脱炭素社会実現に向けて「再生可能エネルギーのみならず
-          、原子力を含めたあらゆる選択肢を追求する」と語った。`;
+          、原子力を含めたあらゆる選択肢を追求する」と語った。(${Date.now()})`;
 
     const memo = await Memo.Swarm.setText(data);
-    console.log(memo);
 
     // send TEST token. issuer => receiver
     const res = await Payment.send(
@@ -64,7 +69,15 @@ const createAccount = async () => {
       memo: memo,
       feeSourceSecret: feeSource.secret
     });
-    console.log(res.hash);
+
+    // get transaction datas from a account
+    Transaction.get(receiver.pubkey, (txs) => {
+      txs.records.forEach(async (tx) => {
+        // get memo text 
+        tx.memo_type === 'hash' &&
+          console.log(await Memo.Swarm.getText(tx.memo));
+      });
+    });
   } catch (e) {
     console.error(e.response.data);
   }
