@@ -279,6 +279,20 @@ Asset {
 * trustline need to receive token by receiver
 
 ```js
+
+Token.trustline('must params')('optional params')
+
+```
+
+|**optional param**    |**description** |
+|----------|--------------------------|
+|memo(Memo)|MemoType Object|
+|feeSource| for delegate account  when want use `feeBump` function|
+|feeMultiplication| default=100. 100 * feeMultiplication|
+|timeout|set transaction timeout|
+
+
+```js
 const {Token} = require('stellar-suite');
 
 const issuerPubkey = 'GCKFBEIYV2U22IO2BJ4KVJOIP7XPWQGQFKKWXR6DOSJBV7STMAQSMTGG';
