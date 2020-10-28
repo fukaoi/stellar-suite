@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/fukaoi/stellar-suite.svg?branch=master)](https://travis-ci.org/fukaoi/stellar-suite)
+
+
 # stellar-suite
 
 <img src="docs/stellar-suite-logo.png">
