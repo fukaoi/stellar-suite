@@ -43,6 +43,8 @@ const createAccount = async () => {
 
     // create token and trustline
     const token = Token.create('TEST', issuer.pubkey);
+
+    // once ok!
     await Token.trustline(receiver.secret, token);
 
 
@@ -69,6 +71,7 @@ const createAccount = async () => {
       memo: memo,
       feeSourceSecret: feeSource.secret
     });
+    console.log(res);
 
     // get transaction datas from a account
     Transaction.get(receiver.pubkey, (txs) => {

@@ -23,7 +23,7 @@ describe('Stellar.Token', () => {
 
   test('create trustline', async () => {
     const token = Token.create(dummyToken, issuer.pubkey);
-    const res = await Token.trustline(receiver.secret, token);
+    const res = await Token.trustline(receiver.secret, token)();
     expect(res.hash).toBeDefined();
   })
 });
