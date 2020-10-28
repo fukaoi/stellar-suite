@@ -45,7 +45,7 @@ describe('Stellar.Account', () => {
 
     const optinalParams = {
       memo: Memo.text('Optional Params'),
-      feeSource: feeSource.secret,
+      feeSourceSecret: feeSource.secret,
       feeMultiplication: 2,
       timeout: 30,
     }

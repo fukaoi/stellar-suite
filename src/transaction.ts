@@ -148,7 +148,7 @@ export namespace Transaction {
       }
     } catch (e) {
       if (e.response) {
-        switch (e.response.data.status) {
+        switch (e.response.status) {
           case 504:
             console.count(`[504 Error] Retry. ${retryCount}`);
             submit(
@@ -160,7 +160,7 @@ export namespace Transaction {
             );
             break;
           default:
-            throw new Error(JSON.stringify(e.response.data));
+            throw new Error(JSON.stringify(e.response));
         }
       }
       throw e;
