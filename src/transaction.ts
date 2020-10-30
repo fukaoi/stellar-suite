@@ -64,6 +64,12 @@ export namespace Transaction {
     Desc = 'desc',
   }
 
+  const txHandler = async (txResponse: any) => {
+    console.log(txResponse.memo_type, await txResponse.transaction().memo, txResponse.amount);
+    // console.log(JSON.stringify(xdr.TransactionEnvelope.fromXDR(txResponse.envelope_xdr, 'base64')));
+    // console.log(JSON.stringify(xdr.TransactionMeta.fromXDR(txResponse.result_meta_xdr, 'base64')));
+  };
+
   export const stream = (
     targetPubkey: string,
     callback: Callback
@@ -80,8 +86,9 @@ export namespace Transaction {
         .order(order)
         .limit(limit)
         .stream({
-          onmessage: (res) => {
-            callback(res);
+          onmessage: async(res: any) => {
+            console.log(res.memo_type, await res.account().payments());
+            // callback(res);
           }
         }
         )
@@ -98,23 +105,23 @@ export namespace Transaction {
   }
 
   // export const get2 = (
-    // targetPubkey: string,
-    // callback: Callback
+  // targetPubkey: string,
+  // callback: Callback
   // ) => (
-    // cursor?: Cursor,
-    // order?: Order,
-    // limit?: number,
-    // ) => {
-      // if (!cursor) cursor = Cursor.FromPast;
-      // if (!order) order = Order.Asc;
-      // if (!limit) limit = 50;
-      // _Horizon.connect().transactions().forAccount(targetPubkey)
-        // .cursor(cursor)
-        // .order(order)
-        // .limit(limit)
-      // .call()
-      // .then(res => callback(res))
-    // }
+  // cursor?: Cursor,
+  // order?: Order,
+  // limit?: number,
+  // ) => {
+  // if (!cursor) cursor = Cursor.FromPast;
+  // if (!order) order = Order.Asc;
+  // if (!limit) limit = 50;
+  // _Horizon.connect().transactions().forAccount(targetPubkey)
+  // .cursor(cursor)
+  // .order(order)
+  // .limit(limit)
+  // .call()
+  // .then(res => callback(res))
+  // }
 
   export const submit = async (
     senderSecret: string,
