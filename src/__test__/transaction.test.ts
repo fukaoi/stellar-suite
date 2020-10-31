@@ -88,10 +88,11 @@ describe('Stellar.Horizon', () => {
     setTimeout(() => {
       console.log("Time's up -- start! test");
       Transaction.get(
-        target.pubkey, (res: any) => {
-          console.log(res);
+        target.pubkey, async (res: any) => {
           expect(res.operations).toBeDefined();
           expect(res.memo).toBeDefined();
+          res.memo.type === 'hash' &&
+            console.log(await Memo.Swarm.getText(res.memo.value));
           done();
         });
     }, 10000);
