@@ -41,7 +41,7 @@ describe('Stellar.Horizon', () => {
     // [noop] use browser.test.html, so this code is nothing.
   });
 
-  test('get data', done => {
+  test.only('get data', done => {
     Transaction.get(
       'GCKFBEIYV2U22IO2BJ4KVJOIP7XPWQGQFKKWXR6DOSJBV7STMAQSMTGG', (res: any) => {
       console.log(res);
