@@ -2,6 +2,7 @@ import {Transaction} from '../transaction';
 import {Account} from '../account';
 import {Memo} from '../memo';
 import {Payment} from '../payment';
+import {Token} from '../token';
 
 let target = {pubkey: '', secret: ''}
 let sender = {pubkey: '', secret: ''}
@@ -19,6 +20,28 @@ const createPayment = async () => {
   );
 }
 
+const createPaymentWithSwarm = async () => {
+  const token = Token.create('DUMMY', sender.pubkey);
+  await Token.trustline(target.secret, token)();
+
+  const dummy = {
+    type: 'SKE48',
+    title: '中野愛理',
+    cagegories: ['ske48', 'live', '卒業セレモニー']
+  };
+
+  await Payment.send(
+    target.pubkey,
+    sender.secret,
+    '999',
+    token,
+  )(
+    {
+      memo: await Memo.Swarm.setText(JSON.stringify(dummy))
+    }
+  );
+}
+
 describe('Stellar.Horizon', () => {
   beforeAll(async () => {
     target = await Account.createTestnet();
@@ -26,6 +49,7 @@ describe('Stellar.Horizon', () => {
     sender = await Account.createTestnet();
     console.log('created sender.', sender);
     createPayment();
+    createPaymentWithSwarm();
   })
 
   test('estimated fee', async () => {

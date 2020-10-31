@@ -64,23 +64,25 @@ export namespace Transaction {
     Desc = 'desc',
   }
 
-  const parsedMemo = (memoObj: any) => {
+  const parsedMemo = async (memoObj: any) => {
     let str = '';
     if (memoObj.type === 'text') {
       str = memoObj.value?.toString('UTF-8');
+    } else if (memoObj.type === 'hash') {
+      str = await Memo.Swarm.getText(memoObj.value);
     } else {
       str = memoObj.value;
     }
     return str;
   }
 
-  const txHandler = (tx: any) => {
+  const txHandler = async (tx: any) => {
     const obj = new _Transaction(tx.envelope_xdr, _Horizon.network());
     return {
       operations: obj.operations,
       memo: {
         type: obj.memo.type,
-        value: parsedMemo(obj.memo)
+        value: await parsedMemo(obj.memo)
       },
       network: obj.networkPassphrase,
     };
@@ -103,7 +105,7 @@ export namespace Transaction {
         .limit(limit)
         .stream({
           onmessage: async (res: any) =>
-            callback(txHandler(res))
+            callback(await txHandler(res))
         }
         )
     }
@@ -115,7 +117,9 @@ export namespace Transaction {
     _Horizon.connect().transactions().forAccount(targetPubkey)
       .call()
       .then((txes: any) => {
-        txes.records.map((tx: any) => callback(txHandler(tx)));
+        txes.records.map(
+          async (tx: any) => callback(await txHandler(tx))
+        );
       }
       )
   }
