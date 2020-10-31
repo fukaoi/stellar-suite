@@ -66,9 +66,8 @@ export namespace Transaction {
 
   const txHandler = (tx: any) => {
     let obj = new _Transaction(tx.envelope_xdr, _Horizon.network());
-    const parsedOperations = JSON.parse(JSON.stringify(obj.operations));
     return {
-      operations: parsedOperations,
+      operations: obj.operations,
       memo: {type: obj.memo.type, value: obj.memo.value},
       network: obj.networkPassphrase,
     };

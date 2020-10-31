@@ -41,12 +41,13 @@ describe('Stellar.Horizon', () => {
     // [noop] use browser.test.html, so this code is nothing.
   });
 
-  test.only('get data', done => {
+  test('get data', done => {
     Transaction.get(
       'GCKFBEIYV2U22IO2BJ4KVJOIP7XPWQGQFKKWXR6DOSJBV7STMAQSMTGG', (res: any) => {
-      console.log(res);
-      done();
-    });
+        expect(res.operations).toBeDefined();
+        expect(res.memo).toBeDefined();
+        done();
+      });
   });
 });
 
