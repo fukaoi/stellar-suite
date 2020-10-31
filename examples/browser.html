@@ -2,8 +2,8 @@
 <html>
 
 <head>
-  <!-- <script type="text/javascript" src="../dist/browser/stellar-suite.js"> -->
-  <script type="text/javascript" src="../dist/browser/stellar-suite-dev.js">
+  <!-- <script type="text/javascript" src="../dist/browser/stellar-suite-dev.js"> -->
+  <script type="text/javascript" src="../dist/browser/stellar-suite.js">
   </script>
 </head>
 
@@ -11,7 +11,7 @@
   <script>
     (async () => {
       // Get transaction by stream data
-      const pubkey = 'GCKFBEIYV2U22IO2BJ4KVJOIP7XPWQGQFKKWXR6DOSJBV7STMAQSMTGG';
+      const pubkey = 'GAP5LETOV6YIE62YAM56STDANPRDO7ZFDBGSNHJQIYGGKSMOZAHOOS2S';
       const fn = StellarSuite.Transaction.stream(pubkey, console.log)();
 
       // Store ethereum swarm storage
