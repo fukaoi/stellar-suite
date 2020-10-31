@@ -65,9 +65,13 @@ export namespace Transaction {
   }
 
   const txHandler = (tx: any) => {
-    const obj = new _Transaction(tx.envelope_xdr, _Horizon.network());
-    console.log(obj);
-    return obj;
+    let obj = new _Transaction(tx.envelope_xdr, _Horizon.network());
+    const parsedOperations = JSON.parse(JSON.stringify(obj.operations));
+    return {
+      operations: parsedOperations,
+      memo: {type: obj.memo.type, value: obj.memo.value},
+      network: obj.networkPassphrase,
+    };
   };
 
   export const stream = (
@@ -101,7 +105,7 @@ export namespace Transaction {
       .then((txes: any) => {
         txes.records.map((tx: any) => callback(txHandler(tx)));
       }
-    )
+      )
   }
 
   export const submit = async (
