@@ -88,7 +88,7 @@ describe('Stellar.Horizon', () => {
     setTimeout(() => {
       console.log("Time's up -- start! test");
       Transaction.get(
-        target.pubkey, async (res: any) => {
+        target.pubkey, (res: any) => {
           console.log(res);
           expect(res.operations).toBeDefined();
           expect(res.memo).toBeDefined();
