@@ -64,11 +64,24 @@ export namespace Transaction {
     Desc = 'desc',
   }
 
+  const parsedMemo = (memoObj: any) => {
+    let str = '';
+    if (memoObj.type === 'text') {
+      str = memoObj.value?.toString('UTF-8');
+    } else {
+      str = memoObj.value;
+    }
+    return str;
+  }
+
   const txHandler = (tx: any) => {
-    let obj = new _Transaction(tx.envelope_xdr, _Horizon.network());
+    const obj = new _Transaction(tx.envelope_xdr, _Horizon.network());
     return {
       operations: obj.operations,
-      memo: {type: obj.memo.type, value: obj.memo.value},
+      memo: {
+        type: obj.memo.type,
+        value: parsedMemo(obj.memo)
+      },
       network: obj.networkPassphrase,
     };
   };

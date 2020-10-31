@@ -1,12 +1,31 @@
 import {Transaction} from '../transaction';
 import {Account} from '../account';
+import {Memo} from '../memo';
+import {Payment} from '../payment';
 
 let target = {pubkey: '', secret: ''}
+let sender = {pubkey: '', secret: ''}
+
+const createPayment = async () => {
+  const dummy = 'Transaction test';
+  await Payment.send(
+    target.pubkey,
+    sender.secret,
+    '777',
+  )(
+    {
+      memo: Memo.text(dummy)
+    }
+  );
+}
 
 describe('Stellar.Horizon', () => {
   beforeAll(async () => {
     target = await Account.createTestnet();
     console.log('created target.', target);
+    sender = await Account.createTestnet();
+    console.log('created sender.', sender);
+    createPayment();
   })
 
   test('estimated fee', async () => {
@@ -42,12 +61,16 @@ describe('Stellar.Horizon', () => {
   });
 
   test('get data', done => {
-    Transaction.get(
-      'GCKFBEIYV2U22IO2BJ4KVJOIP7XPWQGQFKKWXR6DOSJBV7STMAQSMTGG', (res: any) => {
-        expect(res.operations).toBeDefined();
-        expect(res.memo).toBeDefined();
-        done();
-      });
+    setTimeout(() => {
+      console.log("Time's up -- start! test");
+      Transaction.get(
+        target.pubkey, (res: any) => {
+          console.log(res);
+          expect(res.operations).toBeDefined();
+          expect(res.memo).toBeDefined();
+          done();
+        });
+    }, 10000);
   });
 });
 
