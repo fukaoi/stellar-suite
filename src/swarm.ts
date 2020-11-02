@@ -1,5 +1,6 @@
 import {TextDecoder} from "util";
 import {constants} from './constants';
+import {StellarSuiteError} from "./error";
 const Bzz = require('web3-bzz'); //No suitable es6 
 
 interface Bzz {
@@ -28,6 +29,10 @@ export namespace Swarm {
     return new TextDecoder('utf-8').decode(binary);
   }
 
-  export const set = async (text: string): Promise<string> =>
-    await bzz.upload(text)
+  export const set = async (text: string): Promise<string> => {
+    if (!text || text.length === 0) {
+      throw new StellarSuiteError('Set empty data');
+    } 
+    return await bzz.upload(text);
+  }
 }

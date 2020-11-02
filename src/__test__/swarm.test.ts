@@ -1,3 +1,4 @@
+import {StellarSuiteError} from '../error';
 import {Swarm} from '../swarm';
 
 const dummy = 'test';
@@ -11,6 +12,11 @@ describe('Stellar.Swarm', () => {
     Swarm.connect();
     const res = await Swarm.set(dummy);
     expect(res).toHaveLength(64);
+  });
+
+  test('set empty data', async() => {
+    Swarm.connect();
+    await expect(Swarm.set('')).rejects.toThrow(StellarSuiteError);
   });
 
   test('get data', async() => {
