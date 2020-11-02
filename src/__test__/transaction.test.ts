@@ -92,8 +92,6 @@ describe('Stellar.Horizon', () => {
           console.log(res);
           expect(res.operations).toBeDefined();
           expect(res.memo).toBeDefined();
-          res.memo.type === 'hash' &&
-            console.log(await Memo.Swarm.getText(res.memo.value));
           done();
         });
     }, 10000);
