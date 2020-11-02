@@ -9,3 +9,13 @@ install:
 script:
   - npm test
 
+deploy:
+  provider: npm
+  email: goodakira7@gmail.com
+  api_key:
+    secure: RBh2sdyW1YeqTF8z5XWRQvIFJWZhDOt0QoaaAJ7hsz8SoS/FXNah6qlvqIMVKX423cSznkpYPLflmsS2qOjiU4E5SEZloNa9YDyrOe+Lp92Og77fuPYXNOqK9O/tQKaNFYG9yy6FwbPoxeMDfEjryeMSSFIR1hdZDq/Xi25HBAcrOfCqBXn++Rx8v1FWPz47znbPqJwIGnpmOtLRtQjFE72u5saDUJzi3TTp7r1Cfjso+tcTEeM5xxZ4cO8Ua8KgHsrOwa+gJ/j8g5Ovpx5qaM/cG4HzDdiAtYNj33KkoH5knSD1Q5VfunRVHB41dcJfjQIQA9jlUrRjyYPRRtRpVS9KOJ7yB+X71BzN5NNjFto7QcCO5ugKrZHg51+eUDOFefR6BMgXltmI6w6MrcOX9MINZFrCfxIbmM26Dd2TsbijAK8ifWe56M/9RxoEUolqXL+8n7c0AHDZ2aIoNgEnlxXuKJjvdbLz7Ya4DlvFZdCJK8pNBNCXW5aSxXlx2QRrWhuvXtSuydXG9eeN0GWVi+CK8P7/BFr9WAVwgsQ0J0gPsUOuf9II5hADSZp20kuc0ooEK15o/nn9ROWBClepJ8S4GIT1ool36A9ctULUOj375fvny2LDtApKa90T+cXG2RZcgiZ7H6ZcjpQo48Jwwj7MFx2dgmpjID45p4Z9HAM=
+  on:
+    tags: true
+    repo: fukaoi/stellar-suite
+    branch: main
+  skip_cleanup: 'true'
