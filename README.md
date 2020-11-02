@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/fukaoi/stellar-suite.svg?branch=master)](https://travis-ci.org/fukaoi/stellar-suite)
+[![Build Status](https://travis-ci.org/fukaoi/stellar-suite.svg?branch=main)](https://travis-ci.org/fukaoi/stellar-suite)
 
 
 # stellar-suite
