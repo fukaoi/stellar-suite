@@ -3,3 +3,4 @@ dist/
 dist.browser/
 credential
 prd-accounts.json
+*.log
