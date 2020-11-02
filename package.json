@@ -13,18 +13,21 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+ssh://git@github.com/ayanasu/stellar-suite.git"
+		"url": "git+ssh://git@github.com/fukaoi/stellar-suite.git"
 	},
 	"keywords": [
 		"common",
-		"lib"
+		"lib",
+   "blockchain",
+   "stellar",
+   "js-stellar-sdk"
 	],
 	"author": "fukaoi",
 	"license": "MIT",
 	"bugs": {
-		"url": "https://github.com/ayanasu/stellar-suite/issues"
+		"url": "https://github.com/fukaoi/stellar-suite/issues"
 	},
-	"homepage": "https://github.com/ayanasu/stellar-suite#readme",
+	"homepage": "https://github.com/fukaoi/stellar-suite#readme",
 	"dependencies": {
 		"awesome-typescript-loader": "^5.2.1",
 		"stellar-sdk": "^6.0.0",
