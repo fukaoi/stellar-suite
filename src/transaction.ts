@@ -76,7 +76,6 @@ export namespace Transaction {
 
   const txHandler = (tx: any) => {
     const obj = new _Transaction(tx.envelope_xdr, _Horizon.network());
-    console.log(tx);
     return {
       source: obj.source,
       fee: obj.fee,
