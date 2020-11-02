@@ -5,6 +5,9 @@
 
 <img src="docs/stellar-suite-logo.png">
 
+stellar-suite is a JS library to handle stellar easily and usefully. It wraps  [js-stellar-sdk](https://github.com/stellar/js-stellar-sdk)  within. Payment  and multisig transactions tend to be complicated JS code, but you can implement them easily by using stellar-suite.
+MemoText can be added to a transaction, but the limit  `28-byte` . This limit is cleared by working with [Ethereum SWAM](https://ethersphere.github.io/swarm-home/).
+
 ## How to install 
  
 ```shell
