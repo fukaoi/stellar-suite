@@ -3,7 +3,6 @@
 	"version": "0.1.0",
 	"description": "Useful libarary wrapped of js-stellar-sdk. very easy, useful",
 	"main": "dist/index.js",
-	"private": true,
 	"scripts": {
 		"clean": "rm -rf dist",
 		"build": "tsc && webpack --config webpack.config-dev.js",
