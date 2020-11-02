@@ -76,13 +76,20 @@ export namespace Transaction {
 
   const txHandler = (tx: any) => {
     const obj = new _Transaction(tx.envelope_xdr, _Horizon.network());
+    console.log(tx);
     return {
+      source: obj.source,
+      fee: obj.fee,
+      hash: tx.hash,
+      createdAt: tx.created_at,
       operations: obj.operations,
       memo: {
         type: obj.memo.type,
         value: parsedMemo(obj.memo)
       },
       network: obj.networkPassphrase,
+      successful: tx.successful,
+      feeSource: tx.fee_account
     };
   };
 

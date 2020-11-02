@@ -89,6 +89,7 @@ describe('Stellar.Horizon', () => {
       console.log("Time's up -- start! test");
       Transaction.get(
         target.pubkey, async (res: any) => {
+          console.log(res);
           expect(res.operations).toBeDefined();
           expect(res.memo).toBeDefined();
           res.memo.type === 'hash' &&
