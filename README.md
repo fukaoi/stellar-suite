@@ -549,4 +549,192 @@ testtesttesttesttesttesttesttesttesttesttesttesttesttesttest
 
 ```
 
+### *Transaction*
+
+#### Transaction.estimatedFee() 
+* Can get estimate fee price
+
+```js
+const {
+  Transaction
+} = require('stellar-suite');
+
+(async () => {
+  const res = await Transaction.estimatedFee();
+  console.log(res);
+})();
+
+/* response
+
+100
+
+*/
+
+```
+
+#### Transaction.feeStats() 
+* fee history information
+
+```js
+
+const {
+  Transaction
+} = require('stellar-suite');
+
+(async () => {
+  const res = await Transaction.feeStats();
+  console.log(res);
+})();
+
+/* response
+
+{
+  last_ledger: '77168',
+  last_ledger_base_fee: '100',
+  ledger_capacity_usage: '0',
+  fee_charged: {
+    max: '100',
+    min: '100',
+    mode: '100',
+    p10: '100',
+    p20: '100',
+    p30: '100',
+    p40: '100',
+    p50: '100',
+    p60: '100',
+    p70: '100',
+    p80: '100',
+    p90: '100',
+    p95: '100',
+    p99: '100'
+  },
+  max_fee: {
+    max: '100',
+    min: '100',
+    mode: '100',
+    p10: '100',
+    p20: '100',
+    p30: '100',
+    p40: '100',
+    p50: '100',
+    p60: '100',
+    p70: '100',
+    p80: '100',
+    p90: '100',
+    p95: '100',
+    p99: '100'
+  }
+}
+ 
+*/
+
+```
+
+#### Transaction.serverTimeout() 
+* Can get unix timestamp + param value(second) in Horizon server
+
+```js
+const {
+  Transaction
+} = require('stellar-suite');
+
+(async () => {
+  const res = await Transaction.serverTimeout(30);
+  console.log(res);
+})();
+
+/* response
+
+{ minTime: 0, maxTime: 1604283380 }  
+
+*/
+
+```
+
+#### Transaction.get() 
+* Get transaction datas. currently, only get account base
+
+```js
+const {
+  Transaction
+} = require('stellar-suite');
+
+const pubkey = 'GCKFBEIYV2U22IO2BJ4KVJOIP7XPWQGQFKKWXR6DOSJBV7STMAQSMTGG';
+
+Transaction.get(pubkey, console.log);
+
+/* response
+
+{
+  source: 'GCKFBEIYV2U22IO2BJ4KVJOIP7XPWQGQFKKWXR6DOSJBV7STMAQSMTGG',
+  fee: '100',
+  hash: '88a34344465b43abbc20ce3201df41a2129d88b94f3243179e3afad1f3ebcebc',
+  createdAt: '2020-11-02T02:40:37Z',
+  operations: [
+    {
+      source: 'GCKFBEIYV2U22IO2BJ4KVJOIP7XPWQGQFKKWXR6DOSJBV7STMAQSMTGG',
+      type: 'payment',
+      destination: 'GBP3XOFYC6TWUIRZAB7MB6MTUZBCREAYB4E7XKE3OWDP75VU5JB74ZF6',
+      asset: [Asset],
+      amount: '100000.0000000'
+    }
+  ],
+  memo: { type: 'none', value: null },
+  network: 'Test SDF Network ; September 2015',
+  successful: true,
+  feeSource: 'GCKFBEIYV2U22IO2BJ4KVJOIP7XPWQGQFKKWXR6DOSJBV7STMAQSMTGG'
+}
+
+*/
+```
+
+#### Transaction.stream() 
+* Using stream protocol(server sent event),get transaction datas . currently, only get account base. `runtime environment is HTML.`
+
+```html
+<html>
+
+<head>
+  <script type="text/javascript" src="../dist/browser/stellar-suite.js">
+  </script>
+</head>
+
+<body>
+  <script>
+      // Get transaction by stream data
+      const pubkey = 'GAP5LETOV6YIE62YAM56STDANPRDO7ZFDBGSNHJQIYGGKSMOZAHOOS2S';
+      const fn = StellarSuite.Transaction.stream(pubkey, console.log)();
+  </script>
+</body>
+
+</html>
+
+/* response
+
+{
+  source: 'GCKFBEIYV2U22IO2BJ4KVJOIP7XPWQGQFKKWXR6DOSJBV7STMAQSMTGG',
+  fee: '100',
+  hash: '88a34344465b43abbc20ce3201df41a2129d88b94f3243179e3afad1f3ebcebc',
+  createdAt: '2020-11-02T02:40:37Z',
+  operations: [
+    {
+      source: 'GCKFBEIYV2U22IO2BJ4KVJOIP7XPWQGQFKKWXR6DOSJBV7STMAQSMTGG',
+      type: 'payment',
+      destination: 'GBP3XOFYC6TWUIRZAB7MB6MTUZBCREAYB4E7XKE3OWDP75VU5JB74ZF6',
+      asset: [Asset],
+      amount: '100000.0000000'
+    }
+  ],
+  memo: { type: 'none', value: null },
+  network: 'Test SDF Network ; September 2015',
+  successful: true,
+  feeSource: 'GCKFBEIYV2U22IO2BJ4KVJOIP7XPWQGQFKKWXR6DOSJBV7STMAQSMTGG'
+}
+
+*/
+```
+
+
+
+#### More usages look at [examples/](https://github.com/fukaoi/stellar-suite/tree/main/examples)
 
