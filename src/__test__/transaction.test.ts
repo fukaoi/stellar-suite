@@ -6,40 +6,28 @@ import {Token} from '../token';
 
 let target = {pubkey: '', secret: ''}
 let sender = {pubkey: '', secret: ''}
+let feeSource = {pubkey: '', secret: ''}
 
-const createPayment = async () => {
-  const dummy = 'Transaction test';
-  await Payment.send(
-    target.pubkey,
-    sender.secret,
-    '777',
-  )(
-    {
-      memo: Memo.text(dummy)
-    }
-  );
-}
-
-const createPaymentWithSwarm = async () => {
-  const token = Token.create('DUMMY', sender.pubkey);
-  await Token.trustline(target.secret, token)();
-
-  const dummy = {
+const paymentDummy = async () => {
+  const memo = {
     type: 'SKE48',
     title: '中野愛理',
     cagegories: ['ske48', 'live', '卒業セレモニー']
   };
-
+  const token = Token.create('FEEBUMP', sender.pubkey);
+  await Token.trustline(target.secret, token)({
+    feeSourceSecret: sender.secret,
+  });
   await Payment.send(
     target.pubkey,
     sender.secret,
-    '999',
+    '111',
     token,
-  )(
-    {
-      memo: await Memo.Swarm.setText(JSON.stringify(dummy))
-    }
-  );
+  )({
+    feeSourceSecret: feeSource.secret,
+    memo: await Memo.Swarm.setText(JSON.stringify(memo))
+  });
+  console.log('OK payment fee bump');
 }
 
 describe('Stellar.Horizon', () => {
@@ -48,8 +36,9 @@ describe('Stellar.Horizon', () => {
     console.log('created target.', target);
     sender = await Account.createTestnet();
     console.log('created sender.', sender);
-    createPayment();
-    createPaymentWithSwarm();
+    feeSource = await Account.createTestnet();
+    console.log('created feeSource.', feeSource);
+    paymentDummy();
   })
 
   test('estimated fee', async () => {
@@ -92,7 +81,8 @@ describe('Stellar.Horizon', () => {
           console.log(res);
           expect(res.operations).toBeDefined();
           expect(res.memo).toBeDefined();
-          done();
+          res.memo.type === 'hash' &&
+            console.log(await Memo.Swarm.getText(res.memo.value), done());
         });
     }, 10000);
   });
