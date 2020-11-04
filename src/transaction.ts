@@ -8,6 +8,7 @@ import {
   Keypair,
   Transaction as _Transaction,
   TransactionBuilder,
+  FeeBumpTransaction,
   xdr,
 } from 'stellar-base';
 
@@ -75,7 +76,24 @@ export namespace Transaction {
   }
 
   const txHandler = (tx: any) => {
-    const obj = new _Transaction(tx.envelope_xdr, _Horizon.network());
+    let obj: _Transaction|FeeBumpTransaction;
+    let envelope = tx.envelope_xdr;
+    if (tx.fee_bump_transaction) {
+     const objFeeBump = new FeeBumpTransaction(
+       tx.envelope_xdr, 
+       _Horizon.network()
+     );
+     envelope = `${objFeeBump.innerTransaction}`;
+    }
+
+  if (typeof envelope === 'string') {
+      const buffer = Buffer.from(envelope, 'base64');
+      envelope = xdr.TransactionEnvelope.fromXDR(buffer);
+    }
+  
+    console.log(envelope.switch());
+    obj = new _Transaction(envelope, _Horizon.network());
+    console.log(obj);
     return {
       source: obj.source,
       fee: obj.fee,

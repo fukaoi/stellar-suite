@@ -96,6 +96,20 @@ describe('Stellar.Horizon', () => {
         });
     }, 10000);
   });
+
+  test.only('get data of fee bump', done => {
+    setTimeout(() => {
+      console.log("Time's up -- start! test");
+      Transaction.get(
+        'GAU4B47NJTGA4CHPRWGHPQVAUBUDN2GA3JK2PJEUXXQP6AOHCICNB7WU', async (res: any) => {
+          console.log(res);
+          expect(res.operations).toBeDefined();
+          expect(res.memo).toBeDefined();
+          done();
+        });
+    }, 10000);
+  });
+
 });
 
 jest.setTimeout(60000);
