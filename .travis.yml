@@ -3,8 +3,7 @@ node_js:
 - stable
 branches:
   only: 
-    - master
-    - develop
+    - main
 install:
 - npm install
 script:
