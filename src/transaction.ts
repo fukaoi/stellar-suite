@@ -10,6 +10,7 @@ import {
   TransactionBuilder,
   FeeBumpTransaction,
   xdr,
+  Memo as _Memo,
 } from 'stellar-base';
 
 import {Horizon as _Horizon} from './horizon';
@@ -65,10 +66,10 @@ export namespace Transaction {
     Desc = 'desc',
   }
 
-  const parsedMemo = (memoObj: any) => {
-    let str = '';
+  const parsedMemo = (memoObj: _Memo) => {
+    let str: any;
     if (memoObj.type === 'text') {
-      str = memoObj.value?.toString('UTF-8');
+      str = `${memoObj.value?.toString('UTF-8')}`;
     } else {
       str = memoObj.value;
     }
