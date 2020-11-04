@@ -1,11 +1,6 @@
 language: node_js
 node_js:
 - stable
-branches:
-  only:
-    - main
-    - master
-    - stable
 install:
 - npm install
 script:
