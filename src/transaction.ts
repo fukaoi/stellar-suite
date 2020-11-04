@@ -67,7 +67,7 @@ export namespace Transaction {
   }
 
   const parsedMemo = (memoObj: _Memo) => {
-    let str: any;
+    let str: number|string|Uint8Array|null;
     if (memoObj.type === 'text') {
       str = `${memoObj.value?.toString('UTF-8')}`;
     } else {
@@ -77,6 +77,7 @@ export namespace Transaction {
   }
 
   const txHandler = (tx: any) => {
+    console.log(tx.constructor.name);
     let obj: _Transaction | FeeBumpTransaction;
     if (tx.fee_bump_transaction) {
       const objFeeBump = new FeeBumpTransaction(
