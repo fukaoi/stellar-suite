@@ -67,9 +67,9 @@ export namespace Transaction {
   }
 
   const parsedMemo = (memoObj: _Memo) => {
-    let str: number|string|Uint8Array|null;
+    let str: number|string|Uint8Array|null|undefined;
     if (memoObj.type === 'text') {
-      str = `${memoObj.value?.toString('UTF-8')}`;
+      str = memoObj.value?.toString('UTF-8');
     } else {
       str = memoObj.value;
     }

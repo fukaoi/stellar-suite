@@ -1,6 +1,6 @@
 {
 	"name": "stellar-suite",
-	"version": "0.1.4",
+	"version": "0.11.0",
 	"description": "Useful libarary wrapped of js-stellar-sdk. very easy, useful",
 	"main": "dist/index.js",
 	"scripts": {
