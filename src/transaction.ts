@@ -8,7 +8,9 @@ import {
   Keypair,
   Transaction as _Transaction,
   TransactionBuilder,
+  FeeBumpTransaction,
   xdr,
+  Memo as _Memo,
 } from 'stellar-base';
 
 import {Horizon as _Horizon} from './horizon';
@@ -64,10 +66,10 @@ export namespace Transaction {
     Desc = 'desc',
   }
 
-  const parsedMemo = (memoObj: any) => {
-    let str = '';
+  const parsedMemo = (memoObj: _Memo) => {
+    let str: any;
     if (memoObj.type === 'text') {
-      str = memoObj.value?.toString('UTF-8');
+      str = `${memoObj.value?.toString('UTF-8')}`;
     } else {
       str = memoObj.value;
     }
@@ -75,7 +77,20 @@ export namespace Transaction {
   }
 
   const txHandler = (tx: any) => {
-    const obj = new _Transaction(tx.envelope_xdr, _Horizon.network());
+    let obj: _Transaction | FeeBumpTransaction;
+    if (tx.fee_bump_transaction) {
+      const objFeeBump = new FeeBumpTransaction(
+        tx.envelope_xdr,
+        _Horizon.network()
+      );
+      obj = objFeeBump.innerTransaction;
+    } else {
+      obj = new _Transaction(
+        tx.envelope_xdr,
+        _Horizon.network()
+      );
+    }
+
     return {
       source: obj.source,
       fee: obj.fee,
@@ -183,12 +198,13 @@ export namespace Transaction {
         switch (e.response.status) {
           case 504:
             console.count(`[504 Error] Retry. ${retryCount}`);
+            retryCount = retryCount++;
             submit(
               senderSecret,
               operation,
               memo,
               feeSourceSecret,
-              ++retryCount
+              retryCount
             );
             break;
           default:
