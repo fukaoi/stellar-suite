@@ -26,7 +26,8 @@ export namespace Swarm {
 
   export const get = async (hashId: string): Promise<string> => {
     const binary = await bzz.download(hashId)
-    return new TextDecoder('utf-8').decode(binary);
+    const Decoder = typeof window === 'undefined' ? TextDecoder : window.TextDecoder;
+    return new Decoder('utf-8').decode(binary);
   }
 
   export const set = async (text: string): Promise<string> => {
