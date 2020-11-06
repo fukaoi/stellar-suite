@@ -25,15 +25,16 @@ export namespace Swarm {
   }
 
   export const get = async (hashId: string): Promise<string> => {
-    const binary = await bzz.download(hashId)
-    const Decoder = typeof window === 'undefined' ? TextDecoder : window.TextDecoder;
+    const binary = await bzz.download(hashId);
+    let Decoder = typeof window === 'undefined' ? TextDecoder : window.TextDecoder;
+    if (env === constants.test) Decoder = TextDecoder;
     return new Decoder('utf-8').decode(binary);
   }
 
   export const set = async (text: string): Promise<string> => {
     if (!text || text.length === 0) {
       throw new StellarSuiteError('Set empty data');
-    } 
+    }
     return await bzz.upload(text);
   }
 }
