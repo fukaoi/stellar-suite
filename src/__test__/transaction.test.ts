@@ -82,11 +82,12 @@ describe('Stellar.Horizon', () => {
           expect(res.operations).toBeDefined();
           expect(res.memo).toBeDefined();
           res.memo.type === 'hash' &&
-            console.log(await Memo.Swarm.getText(res.memo.value), done());
+            expect(await Memo.Swarm.getText(res.memo.value));
+          done();
         });
     }, 10000);
-  });
+  }, );
 });
 
-jest.setTimeout(180000);
+jest.setTimeout(120000);
 
