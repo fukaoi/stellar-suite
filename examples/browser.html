@@ -2,21 +2,65 @@
 <html>
 
 <head>
-  <!-- <script type="text/javascript" src="../dist/browser/stellar-suite-dev.js"> -->
-  <script type="text/javascript" src="../dist/browser/stellar-suite.js">
+  <script type="text/javascript" src="../dist/browser/stellar-suite-dev.js">
+  <!-- <script type="text/javascript" src="../dist/browser/stellar-suite.js"> -->
   </script>
 </head>
 
 <body>
   <script>
-    (async () => {
-      // Get transaction by stream data
-      const pubkey = 'GAP5LETOV6YIE62YAM56STDANPRDO7ZFDBGSNHJQIYGGKSMOZAHOOS2S';
-      const fn = StellarSuite.Transaction.stream(pubkey, console.log)();
+    const Account = StellarSuite.Account;
+    const Memo = StellarSuite.Memo;
+    const Payment = StellarSuite.Payment;
+    const Token = StellarSuite.Token;
+    const Transaction = StellarSuite.Transaction;
 
-      // Store ethereum swarm storage
-      StellarSuite.Swarm.connect();
-      console.log(await StellarSuite.Swarm.set('dummy'));
+    (async () => {
+      // create account
+      const issuer = await Account.createTestnet();
+      console.log('created issuer.', issuer);
+      const receiver = await Account.createTestnet();
+      console.log('created receiver.', receiver);
+      const feeSource = await Account.createTestnet();
+      console.log('created feeSource.', feeSource);
+
+      // create token and trustline
+      const token = Token.create('TEST', issuer.pubkey);
+
+      // once call
+      await Token.trustline(
+        receiver.secret,
+        token
+      )({
+        feeSourceSecret: feeSource.secret
+      });
+
+
+      // add memo
+      const data = `
+        Joe Biden is leading in Nevada and Arizona and threatening to erase President Trump’s advantages 
+        in Pennsylvania and Georgia. The Trump team is pressing legal challenges in several states.(${Date.now()})`;
+
+      const memo = await Memo.Swarm.setText(data);
+
+      // send TEST token. issuer => receiver
+      await Payment.send(
+        receiver.pubkey,
+        issuer.secret,
+        '100',
+        token
+      )({
+        memo: memo,
+        feeSourceSecret: feeSource.secret
+      });
+
+      // get transaction datas from a account
+      Transaction.get(receiver.pubkey, async (tx) => {
+        // get memo text 
+        if (tx.memo.type === 'hash'){
+          console.log(await Memo.Swarm.getText(tx.memo.value));
+        }
+      });
     })();
   </script>
 </body>

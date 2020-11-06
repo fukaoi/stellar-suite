@@ -80,7 +80,6 @@ const createAccount = async () => {
     // get transaction datas from a account
     Transaction.get(receiver.pubkey, async (tx) => {
       // get memo text 
-      console.warn(tx.memo.value);
       tx.memo.type === 'hash' &&
         console.log(await Memo.Swarm.getText(tx.memo.value));
     });
