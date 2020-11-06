@@ -67,7 +67,7 @@ const createAccount = async () => {
     const memo = await Memo.Swarm.setText(data);
 
     // send TEST token. issuer => receiver
-    const res = await Payment.send(
+    await Payment.send(
       receiver.pubkey,
       issuer.secret,
       '100',
@@ -78,18 +78,14 @@ const createAccount = async () => {
     });
 
     // get transaction datas from a account
-    Transaction.get(receiver.pubkey, (txs) => {
-      console.log(txs.records.length);
-      txs.records.forEach(async (tx) => {
-        // get memo text 
-        console.log(tx.memo_type, tx.hash);
-        if (tx.memo_type === 'hash') {
-          console.log(await Memo.Swarm.getText(tx.memo));
-        }
-      });
+    Transaction.get(receiver.pubkey, async (tx) => {
+      // get memo text 
+      console.warn(tx.memo.value);
+      tx.memo.type === 'hash' &&
+        console.log(await Memo.Swarm.getText(tx.memo.value));
     });
   } catch (e) {
-    console.error(e.response.data);
+    console.error(e);
   }
 })();
 
