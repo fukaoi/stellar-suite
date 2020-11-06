@@ -11,7 +11,7 @@ describe('Stellar.Horizon', () => {
     expect(res).toBeDefined();
   });
 
-  test('raise exception(error)', async () => {
+  test('set development if no match env value', async () => {
     process.env.NODE_ENV = 'nomatch';
     console.log(process.env.NODE_ENV);
     const res = Horizon.network();

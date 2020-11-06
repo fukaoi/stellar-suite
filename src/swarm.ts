@@ -14,13 +14,9 @@ export namespace Swarm {
   let bzz: Bzz;
 
   export const connect = (): Bzz => {
-    if (env === constants.dev || env === constants.test) {
-      bzz = new Bzz(constants.swarm.testnet);
-    } else if (env === constants.prd) {
-      bzz = new Bzz(constants.swarm.mainnet);
-    } else {
-      throw new Error(`No match enviroment: only ${constants.dev}, ${constants.prd}`);
-    }
+    bzz = env === constants.prd ?
+      new Bzz(constants.swarm.mainnet) :
+      new Bzz(constants.swarm.testnet);
     return bzz;
   }
 
