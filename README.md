@@ -19,9 +19,6 @@ npm install stellar-suite
 ### development
 
 * Node.js setting
-  ```js
-  NODE_ENV=development app.js
-  ```
 
 * Build command for Built in HTML JS
   ```shell
@@ -737,7 +734,19 @@ Transaction.get(pubkey, console.log);
 */
 ```
 
+## Examples 
 
+* look at source code: [examples/](https://github.com/fukaoi/stellar-suite/tree/main/examples)
 
-#### More usages look at [examples/](https://github.com/fukaoi/stellar-suite/tree/main/examples)
+* Usage Node.JS example
+
+```js
+node examples/nodejs.js
+```
+
+* Usage Browser example
+
+```js
+chrome examples/browser.html
+```
 
