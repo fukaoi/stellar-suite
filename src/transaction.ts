@@ -129,18 +129,26 @@ export namespace Transaction {
         )
     }
 
-  export const get = (
+  // export const get = (
+    // targetPubkey: string,
+    // callback: Callback
+  // ) => {
+    // _Horizon.connect().transactions().forAccount(targetPubkey)
+      // .call()
+      // .then((txes: any) => {
+        // txes.records.map(
+          // (tx: any) => callback(txHandler(tx))
+        // );
+      // }
+      // )
+  // }
+  export const get = async (
     targetPubkey: string,
     callback: Callback
   ) => {
-    _Horizon.connect().transactions().forAccount(targetPubkey)
-      .call()
-      .then((txes: any) => {
-        txes.records.map(
-          (tx: any) => callback(txHandler(tx))
-        );
-      }
-      )
+    const txes = await _Horizon.connect().transactions().forAccount(targetPubkey).call();
+    console.log(await txes.next());
+    return txes.records.map(tx => callback(txHandler(tx)));
   }
 
   export const submit = async (

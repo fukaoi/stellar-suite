@@ -73,11 +73,12 @@ describe('Stellar.Horizon', () => {
     // [noop] use browser.test.html, so this code is nothing.
   });
 
-  test('get data', done => {
+  test.only('get data', done => {
     setTimeout(() => {
       console.log("Time's up -- start! test");
       Transaction.get(
-        target.pubkey, async (res: any) => {
+        // target.pubkey, async (res: any) => {
+        'GAU4B47NJTGA4CHPRWGHPQVAUBUDN2GA3JK2PJEUXXQP6AOHCICNB7WU', async (res: any) => {
           console.log(res);
           expect(res.operations).toBeDefined();
           expect(res.memo).toBeDefined();
