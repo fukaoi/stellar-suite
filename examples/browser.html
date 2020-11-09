@@ -3,7 +3,7 @@
 
 <head>
   <script type="text/javascript" src="../dist/browser/stellar-suite-dev.js">
-  <!-- <script type="text/javascript" src="../dist/browser/stellar-suite.js"> -->
+  < !-- < script type = "text/javascript" src = "../dist/browser/stellar-suite.js" > -->
   </script>
 </head>
 
@@ -55,14 +55,17 @@
       });
 
       // get transaction datas from a account
-      Transaction.get(receiver.pubkey, async (tx) => {
+      Transaction.stream(receiver.pubkey, async (tx) => {
         // get memo text 
-        if (tx.memo.type === 'hash'){
+        if (tx.memo.type === 'hash') {
           console.log(await Memo.Swarm.getText(tx.memo.value));
         }
-      });
+      }, ({
+        order: Order.Desc,
+        limit: 5,
+      }));  // optional parameter
     })();
   </script>
+  <div id="result"></div>
 </body>
-
 </html>

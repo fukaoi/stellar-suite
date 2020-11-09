@@ -691,6 +691,19 @@ Transaction.get(pubkey, console.log);
 #### Transaction.stream() 
 * Using stream protocol(server sent event),get transaction datas . currently, only get account base. `runtime environment is HTML.`
 
+```js
+
+Transaction.stream('must params')('optional params')
+
+```
+
+|**optional param**    |**description** |
+|----------|--------------------------|
+|cursor|payments happening starting position. default: 'now'|
+|order|ASC or DESC. default: 'ASC'|
+|limit|display limit count. default: '50', max: '200'|
+
+
 ```html
 <html>
 
