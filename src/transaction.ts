@@ -158,28 +158,35 @@ export namespace Transaction {
 	// }
 	// )
 	// }
-	
-	const recursive = (records: any) => 
-		records.map((tx:any) => txHandler(tx));
+
+	const parseRecords = (records: any) => {
+		return records.map((tx: any) => txHandler(tx));
+	}
 
 	export const get = async (
 		targetPubkey: string,
-		records?: any,
-	// ): Promise<TransactionResponse[]> => {
+		tx?: any,
+		// ): Promise<TransactionResponse[]> => {
 	) => {
 		try {
-		let results = [];
-		let nextRecord: any;
-		if (!records) {
-			const txes = await _Horizon.connect().transactions().forAccount(targetPubkey).call();
-		  results.push(recursive(txes.records));
-		  const res = await txes.next();
-			nextRecord = res.records;
-		} 
-		console.log(nextRecord?.records);
-		if (nextRecord.length > 0) get(targetPubkey, nextRecord.records);
-		return results;
-		} catch(e) {
+			let results = [];
+			if (!tx) {
+				tx = await _Horizon.connect().transactions().forAccount(targetPubkey).call();
+			}
+			results.push(parseRecords(tx.records));
+			const nextTx = await tx.next();
+
+			console.log(nextTx.records.length);
+			if (nextTx.records.length === 10) {
+				console.log('[recursiev]');
+				await get(targetPubkey, nextTx);
+			} else {
+				console.log('[no-recursiev]');
+				results.push(parseRecords(nextTx.records));
+			}
+			console.log('[return]');
+			return results;
+		} catch (e) {
 			console.error(e)
 		}
 	}
