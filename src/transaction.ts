@@ -13,6 +13,7 @@ import {
 	Memo as _Memo,
 } from 'stellar-base';
 
+
 import {Horizon as _Horizon} from './horizon';
 import {Account} from './account';
 import {Memo, MemoType, MemoValueType} from './memo';
@@ -157,13 +158,30 @@ export namespace Transaction {
 	// }
 	// )
 	// }
+	
+	const recursive = (records: any) => 
+		records.map((tx:any) => txHandler(tx));
+
 	export const get = async (
 		targetPubkey: string,
-	): Promise<TransactionResponse[]> => {
-		const txes = await _Horizon.connect().transactions().forAccount(targetPubkey).call();
-		console.log(await txes.next());
-		const results = txes.records.map(tx => txHandler(tx));
+		records?: any,
+	// ): Promise<TransactionResponse[]> => {
+	) => {
+		try {
+		let results = [];
+		let nextRecord: any;
+		if (!records) {
+			const txes = await _Horizon.connect().transactions().forAccount(targetPubkey).call();
+		  results.push(recursive(txes.records));
+		  const res = await txes.next();
+			nextRecord = res.records;
+		} 
+		console.log(nextRecord?.records);
+		if (nextRecord.length > 0) get(targetPubkey, nextRecord.records);
 		return results;
+		} catch(e) {
+			console.error(e)
+		}
 	}
 
 	export const submit = async (

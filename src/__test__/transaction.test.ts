@@ -74,16 +74,15 @@ describe('Stellar.Horizon', () => {
 	});
 
 	test.only('get data', async () => {
-		// setTimeout(async () => {
-			console.log("Time's up -- start! test");
-			const results = await Transaction.get('GAU4B47NJTGA4CHPRWGHPQVAUBUDN2GA3JK2PJEUXXQP6AOHCICNB7WU');
-			results.forEach(async (res: TransactionResponse) => {
-				expect(res.operations).toBeDefined();
-				expect(res.memo).toBeDefined();
-				if (res.memo.type === 'hash' && typeof res.memo.value === 'string')
-					expect(await Memo.Swarm.getText(res.memo.value));
-			})
-		// }, 10000);
+		console.log("Time's up -- start! test");
+		const results = await Transaction.get('GAU4B47NJTGA4CHPRWGHPQVAUBUDN2GA3JK2PJEUXXQP6AOHCICNB7WU');
+		// const results = await Transaction.get(target.pubkey);
+		results.forEach(async (res: TransactionResponse) => {
+			expect(res.operations).toBeDefined();
+			expect(res.memo).toBeDefined();
+			if (res.memo.type === 'hash' && typeof res.memo.value === 'string')
+				expect(await Memo.Swarm.getText(res.memo.value));
+		})
 	});
 });
 
