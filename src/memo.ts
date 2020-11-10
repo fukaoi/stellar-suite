@@ -44,3 +44,13 @@ export type MemoType =
     _MemoType.Text |
     _MemoType.Return
   >;
+
+   
+export type MemoValueType =
+  number | 
+  string | 
+  Uint8Array | 
+  null | 
+  undefined;
+
+
