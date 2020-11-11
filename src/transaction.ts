@@ -18,10 +18,6 @@ import {Horizon as _Horizon} from './horizon';
 import {Account} from './account';
 import {Memo, MemoType, MemoValueType} from './memo';
 
-interface Callback {
-  (res: any): void
-}
-
 export interface Optional {
   memo?: MemoType,
   feeSourceSecret?: string,
@@ -44,7 +40,30 @@ export interface TransactionResponse {
   feeSource: string
 }
 
+export enum Cursor {
+  FromPast = '0',
+  Now = 'now',
+}
+
+export enum Order {
+  Asc = 'asc',
+  Desc = 'desc',
+}
+
 export namespace Transaction {
+
+  interface OptionalStream {
+    order?: Order,
+    limit?: number,
+    cursor?: Cursor,
+  }
+
+  interface OptionalGet {
+    order?: Order,
+    limit?: number,
+    offset?: number,
+  }
+
   let retryCount: number = 1;
 
   const createFeeBumpTransaction = async (
@@ -109,7 +128,7 @@ export namespace Transaction {
 
   const descSort = (a: TransactionResponse, b: TransactionResponse) => {
     let comparison = 0;
-    if (a.hash >= b.hash) {
+    if (a.createdAt <= b.createdAt) {
       comparison = 1;
     } else {
       comparison = -1;
@@ -126,31 +145,19 @@ export namespace Transaction {
   export const serverTimeout = async (sec: number): Promise<Server.Timebounds> =>
     await _Horizon.connect().fetchTimebounds(sec);
 
-  export enum Cursor {
-    FromPast = '0',
-    Now = 'now',
-  }
-
-  export enum Order {
-    Asc = 'asc',
-    Desc = 'desc',
-  }
-
   export const stream = (
     targetPubkey: string,
-    callback: Callback
+    callback: (res: any) => void
   ) => (
-    cursor?: Cursor,
-    order?: Order,
-    limit?: number,
-    ): void => {
-      if (!cursor) cursor = Cursor.FromPast;
-      if (!order) order = Order.Asc;
-      if (!limit) limit = 50;
+    optional: OptionalStream = {}
+  ): void => {
+      if (!optional?.cursor) optional.cursor = Cursor.FromPast;
+      if (!optional?.order) optional.order = Order.Asc;
+      if (!optional.limit) optional.limit = 50;
       _Horizon.connect().transactions().forAccount(targetPubkey)
-        .cursor(cursor)
-        .order(order)
-        .limit(limit)
+        .cursor(optional.cursor)
+        .order(optional.order)
+        .limit(optional.limit)
         .stream({
           onmessage: (res: any) =>
             callback(txHandler(res))
@@ -161,13 +168,12 @@ export namespace Transaction {
   export const get = (
     targetPubkey: string,
   ) => async (
-    // cursor?: Cursor,
-    order?: Order,
-    limit?: number,
-    ): Promise<TransactionResponse[]> => {
+    optional: OptionalGet = {}
+  ): Promise<TransactionResponse[]> => {
 
-      if (!order) order = Order.Asc;
-      if (!limit) limit = 50;
+      if (!optional.order) optional.order = Order.Asc;
+      if (!optional.limit) optional.limit = 50;
+      if (!optional.offset) optional.offset = 0;
 
       const tx = await _Horizon.connect().transactions().forAccount(targetPubkey).call();
       let results = mapTxHandler(tx.records);
@@ -178,11 +184,10 @@ export namespace Transaction {
         nextTx = await nextTx.next();
       }
 
-      order === Order.Desc && results.sort(descSort);
+      optional.order === Order.Desc && results.sort(descSort);
 
-      if (limit < results.length) {
-        results = results.splice(0, limit - 1);
-      }
+      if (optional.limit < results.length)
+        results = results.splice(0, optional.limit);
 
       return results;
     }
