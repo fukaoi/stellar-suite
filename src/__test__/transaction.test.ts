@@ -8,7 +8,7 @@ let target = {pubkey: '', secret: ''}
 let sender = {pubkey: '', secret: ''}
 let feeSource = {pubkey: '', secret: ''}
 
-const paymentDummy = async () => {
+const singlePayment = async () => {
   const memo = {
     type: 'SKE48',
     title: '中野愛理',
@@ -27,18 +27,34 @@ const paymentDummy = async () => {
     feeSourceSecret: feeSource.secret,
     memo: await Memo.Swarm.setText(JSON.stringify(memo))
   });
-  console.log('OK payment fee bump');
+  console.log('OK single payment. done');
+}
+
+const multiplePayments = async () => {
+  for (let i = 0; i < 15; i++) {
+    const disposableSender = await Account.createTestnet();
+    await Payment.send(
+      target.pubkey,
+      disposableSender.secret,
+      '222',
+    )({
+      feeSourceSecret: feeSource.secret,
+    });
+  }
+  console.log('OK multiple payment. done');
 }
 
 describe('Stellar.Horizon', () => {
   beforeAll(async () => {
+    console.log('###### (This spec test is take many time cost) ######');
     target = await Account.createTestnet();
     console.log('created target.', target);
     sender = await Account.createTestnet();
     console.log('created sender.', sender);
     feeSource = await Account.createTestnet();
     console.log('created feeSource.', feeSource);
-    paymentDummy();
+    await singlePayment();
+    await multiplePayments();
   })
 
   test('estimated fee', async () => {
@@ -90,7 +106,16 @@ describe('Stellar.Horizon', () => {
     );
     expect(results).toHaveLength(limitSize);
   });
+
+  test('get data. set desc order', async () => {
+    const results = await Transaction.get(target.pubkey)(
+      {
+        order: Order.Desc,
+      }
+    );
+    expect(results[0].createdAt > results[1].createdAt).toBeTruthy();
+  });
 });
 
-jest.setTimeout(60000);
+jest.setTimeout(300000);
 
