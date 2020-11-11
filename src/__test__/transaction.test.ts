@@ -71,18 +71,16 @@ describe('Stellar.Horizon', () => {
 		// [noop] use browser.test.html, so this code is nothing.
 	});
 
-	test.only('get data', async () => {
+	test('get data', async () => {
 		console.log("Time's up -- start! test");
-		const results = await Transaction.get('GAU4B47NJTGA4CHPRWGHPQVAUBUDN2GA3JK2PJEUXXQP6AOHCICNB7WU');
-		console.log(results?.length, results);
-		expect(results).toBeDefined();
+    const results = await Transaction.get('GAU4B47NJTGA4CHPRWGHPQVAUBUDN2GA3JK2PJEUXXQP6AOHCICNB7WU')();
 		// const results = await Transaction.get(target.pubkey);
-		// results.forEach(async (res: TransactionResponse) => {
-			// expect(res.operations).toBeDefined();
-			// expect(res.memo).toBeDefined();
-			// if (res.memo.type === 'hash' && typeof res.memo.value === 'string')
-				// expect(await Memo.Swarm.getText(res.memo.value));
-		// })
+    results.forEach(async (res: TransactionResponse) => {
+      expect(res.operations).toBeDefined();
+      expect(res.memo).toBeDefined();
+      if (res.memo.type === 'hash' && typeof res.memo.value === 'string')
+        expect(await Memo.Swarm.getText(res.memo.value));
+    })
 	});
 });
 
